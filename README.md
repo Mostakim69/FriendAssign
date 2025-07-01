@@ -1,15 +1,15 @@
-# 🍽️ HobbyHub  Web App
+# Website Theme⭐ Online Group-Study assignment  Web App
 
-Welcome to **HobbyHub**,HobbyHub is a community-driven web platform that allows users to create, join, and manage local hobby-based groups. Whether you're into painting, gaming, hiking, or coding, HobbyHub helps you connect with like-minded individuals in your area.
+Welcome to **FriendAssign**,, you will build a web application for online group study with friends (Every registered user is a friend of others). Users can create assignments, complete them, and grade their friends' assignments.
 ---
 
 ## 📌 Project Overview
 
 | Detail                 | Information                                                                        |
 | ---------------------- | ---------------------------------------------------------------------------------- |
-| **GitHub Client site** | [HobbyHub-client](https://github.com/Mostakim69/HobbyHub)         |
-| **Live Site client**   | [HobbyHub-firebase](https://happy-family-4d585.web.app/)                              |
-| **GitHub server site** | [HobbyHub-server](https://github.com/Mostakim69/HobbyHub-server)         |
+| **GitHub Client site** | [FriendAssign-client](https://github.com/Mostakim69/HobbyHub)         |
+| **Live Site client**   | [FriendAssign-firebase](https://happy-family-4d585.web.app/)                              |
+| **GitHub server site** | [FriendAssign-server](https://github.com/Mostakim69/HobbyHub-server)         |
 | **Portfolio GitHub**   | [Md Mostakim Hosen-portfolio](https://github.com/Mostakim69/My-Portfolio-Website)         |
 | **Portfolio Live**     | [Firebase-live](https://my-portfolio-website-9ba5f.web.app/)                         |
 | **Created On**         | 20 May 2025, 10:32 AM GMT+6                                                        |
