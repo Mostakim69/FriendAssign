@@ -11,13 +11,13 @@ Welcome to **FriendAssign**,, you will build a web application for online group 
 | **Live Site client**   | [FriendAssign-firebase](https://assignmen-11-app.web.app/)                              |
 | **GitHub server site** | [FriendAssign-server](https://github.com/Mostakim69/Friend-Assign-server)         |
 | **Portfolio GitHub**   | [Md Mostakim Hosen-portfolio](https://github.com/Mostakim69/My-Portfolio-Website)         |
-| **Portfolio Live**     | [Firebase-live](https://my-portfolio-website-9ba5f.web.app/)                         |
+| **Portfolio Live**     | [Mostakim-Hosen-live](https://my-portfolio-website-9ba5f.web.app/)                         |
 | **Created On**         | 20 May 2025, 10:32 AM GMT+6                                                        |
 | **Location**           | Mohanpur, Rajshahi, Bangladesh                                              |
 
 ## 🌐 Live Site
 
-[🔗 Deployed App](#) _(https://assignmen-11-app.web.app/)_
+[🔗 Deployed App](FriendAssign) _(https://assignmen-11-app.web.app/)_
 
 ---
 
