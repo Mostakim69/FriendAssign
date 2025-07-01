@@ -131,6 +131,39 @@ const Navbar = () => {
       </li>
     ));
 
+  // Dropdown menu component
+  const ProfileDropdown = () => (
+    <ul className="absolute right-0 mt-2 w-48 bg-base-100 rounded-box shadow-lg z-50">
+      <li className="text-lg hover:text-blue-800 transition">
+        <a
+          href="/profile"
+          onClick={(e) => handleSectionClick('profile', e, '/profile')}
+          className={activeSection === 'profile' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
+        >
+          Profile
+        </a>
+      </li>
+      <li className="text-lg hover:text-blue-800 transition">
+        <a
+          href="/auth/create-assignments"
+          onClick={(e) => handleSectionClick('create-assignments', e, '/auth/create-assignments')}
+          className={activeSection === 'create-assignments' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
+        >
+          Create Assignments
+        </a>
+      </li>
+      <li className="text-lg hover:text-blue-800 transition">
+        <a
+          href="/auth/my-group"
+          onClick={(e) => handleGroupClick(e, '/auth/my-group', 'Please log in to view your groups!', 'my-group')}
+          className={activeSection === 'my-group' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
+        >
+          My Attempted Assignments
+        </a>
+      </li>
+    </ul>
+  );
+
   return (
     <div className="navbar bg-base-100 mx-auto px-8 md:px-12 lg:px-16 xl:px-24 fixed top-0 left-0 right-0 z-50 shadow-md">
       <div className="navbar-start">
@@ -156,7 +189,7 @@ const Navbar = () => {
             alt="logo-icon"
             className="h-10 w-10 rounded-full"
           />
-          FriendAssign
+          <span className="hidden md:inline">FriendAssign</span>
         </NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -167,7 +200,7 @@ const Navbar = () => {
           <div className="loading loading-spinner text-primary"></div>
         ) : user ? (
           <>
-            <div className="relative group">
+            <div className="relative">
               <img
                 src={user.photoURL || 'https://i.postimg.cc/FsGnTCZM/a315ddcdff8d5f80ec702cb4553c9589.jpg'}
                 alt="User profile"
@@ -177,37 +210,7 @@ const Navbar = () => {
               <span className="absolute hidden group-hover:block bg-gray-800 text-white text-sm rounded py-1 px-2 top-1/2 -left-40 transform -translate-y-1/2">
                 {user.displayName || 'User'}
               </span>
-              {isDropdownOpen && (
-                <ul className="absolute, right-0 mt-2 w-48 bg-base-100 rounded-box shadow-lg z-50">
-                  <li className="text-lg hover:text-blue-800 transition">
-                    <a
-                      href="/profile"
-                      onClick={(e) => handleSectionClick('profile', e, '/profile')}
-                      className={activeSection === 'profile' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
-                    >
-                      Profile
-                    </a>
-                  </li>
-                  <li className="text-lg hover:text-blue-800 transition">
-                    <a
-                      href="/auth/create-assignments"
-                      onClick={(e) => handleSectionClick('create-assignments', e, '/auth/create-assignments')}
-                      className={activeSection === 'create-assignments' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
-                    >
-                      Create Assignments
-                    </a>
-                  </li>
-                  <li className="text-lg hover:text-blue-800 transition">
-                    <a
-                      href="/auth/my-group"
-                      onClick={(e) => handleGroupClick(e, '/auth/my-group', 'Please log in to view your groups!', 'my-group')}
-                      className={activeSection === 'my-group' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
-                    >
-                      My Attempted Assignments
-                    </a>
-                  </li>
-                </ul>
-              )}
+              {isDropdownOpen && <ProfileDropdown />}
             </div>
             <button onClick={handleLogout} className="btn btn-primary btn-sm">
               Logout
@@ -230,7 +233,7 @@ const Navbar = () => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
           >
-            <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+            <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
           </svg>
           <svg
             className="swap-on h-10 w-10 fill-current"
