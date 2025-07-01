@@ -81,12 +81,13 @@ const Banner = () => {
       autoplay={{ delay: 3000, disableOnInteraction: false }}
       pagination={{ clickable: true }}
       navigation
-      className="min-h-screen min-w-full"
+      className="min-w-full mt-20"
+      style={{ height: '70vh' }} // base height for desktop
     >
       {backgroundImages.map((image, index) => (
         <SwiperSlide key={index}>
           <div
-            className="hero min-h-screen"
+            className="relative hero w-full h-[70vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] xl:h-[75vh]"
             style={{
               backgroundImage: `url(${image})`,
               backgroundSize: 'cover',
@@ -94,24 +95,26 @@ const Banner = () => {
             }}
           >
             <div className="hero-overlay bg-opacity-60"></div>
-            <div className="hero-content text-neutral-content text-center">
+            <div className="hero-content text-neutral-content text-center px-4 sm:px-6 md:px-12 lg:px-20">
               <div>
-                <h1 className="mb-5 text-5xl font-bold animate-text">
+                <h1 className="mb-5 font-bold animate-text 
+                               text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
                   <span className="text-blue-600">Study Together.</span> Learn Better.
                 </h1>
-                <p className="mb-4 text-lg font-bold animate-text animate-text-delay-1">
-                  Collaborate with friends, share assignments, and grow together <br /> in an engaging online study environment.
+                <p className="mb-4 font-bold animate-text animate-text-delay-1
+                              text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto">
+                  Collaborate with friends, share assignments, and grow together  in an engaging online study environment.
                 </p>
-                <div className="pl-46 mb-2">
-                  <p className="flex items-center space-x-2 text-white mb-2 animate-text animate-text-delay-2">
+                <div className="mb-2 max-w-md mx-auto sm:max-w-lg">
+                  <p className="flex items-center space-x-2 text-white mb-2 animate-text animate-text-delay-2 text-sm sm:text-base md:text-lg">
                     <span>✅ Create & Join Study Groups</span>
                   </p>
-                  <p className="flex items-center space-x-2 text-white animate-text animate-text-delay-3">
+                  <p className="flex items-center space-x-2 text-white animate-text animate-text-delay-3 text-sm sm:text-base md:text-lg">
                     <span>✅ Submit and Grade Assignments</span>
                   </p>
                 </div>
                 <button
-                  className="btn btn-primary -ml-6 mt-4 animate-text animate-text-delay-4"
+                  className="btn btn-primary mt-4 animate-text animate-text-delay-4 px-4 py-2 text-sm sm:text-base md:text-lg"
                   onClick={handleCreateClick}
                   disabled={isLoading}
                 >
@@ -128,6 +131,19 @@ const Banner = () => {
                   )}
                 </button>
               </div>
+            </div>
+
+            {/* Scroll Indicator Arrow */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+              <svg
+                className="animate-bounce w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </div>
           </div>
         </SwiperSlide>
