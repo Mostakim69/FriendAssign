@@ -68,8 +68,8 @@ const Navbar = () => {
     e.preventDefault();
     setIsDropdownOpen(false);
     if (user) {
-      setIsNavLoading(true);
       setActiveSection(sectionId);
+      setIsNavLoading(true);
       setTimeout(() => {
         navigate(path);
         setIsNavLoading(false);
@@ -84,6 +84,7 @@ const Navbar = () => {
     }
   };
 
+  // Filter links based on user authentication
   const links = [
     { id: 'home', label: 'Home', path: '/', isNavLink: true },
     { id: 'subscription-services', label: 'All Assignments', path: '/assignments', isNavLink: true },
@@ -106,27 +107,29 @@ const Navbar = () => {
     { id: 'benifit-section', label: 'Features', path: '/' },
     { id: 'faq-section', label: 'FAQ', path: '/' },
     { id: 'contact', label: 'Contact', path: '/contact', isNavLink: true },
-  ].map(({ id, label, path, isNavLink, requiresAuth, message }) => (
-    <li key={id} className="text-lg hover:text-blue-800 transition">
-      {isNavLink && requiresAuth ? (
-        <a
-          href={path}
-          onClick={(e) => handleGroupClick(e, path, message, id)}
-          className={activeSection === id ? 'text-blue-600 border-b-2 border-blue-600' : ''}
-        >
-          {label}
-        </a>
-      ) : (
-        <a
-          href={path}
-          onClick={(e) => handleSectionClick(id, e, path)}
-          className={activeSection === id ? 'text-blue-600 border-b-2 border-blue-600' : ''}
-        >
-          {label}
-        </a>
-      )}
-    </li>
-  ));
+  ]
+    .filter(({ requiresAuth }) => !requiresAuth || (requiresAuth && user))
+    .map(({ id, label, path, isNavLink, requiresAuth, message }) => (
+      <li key={id} className="text-lg hover:text-blue-800 transition">
+        {isNavLink && requiresAuth ? (
+          <a
+            href={path}
+            onClick={(e) => handleGroupClick(e, path, message, id)}
+            className={`mx-1 ${activeSection === id ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+          >
+            {label}
+          </a>
+        ) : (
+          <a
+            href={path}
+            onClick={(e) => handleSectionClick(id, e, path)}
+            className={`mx-1 ${activeSection === id ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+          >
+            {label}
+          </a>
+        )}
+      </li>
+    ));
 
   return (
     <div className="navbar bg-base-100 mx-auto px-8 md:px-12 lg:px-16 xl:px-24 fixed top-0 left-0 right-0 z-50 shadow-md">
@@ -143,7 +146,7 @@ const Navbar = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </div>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-1">
             {links}
           </ul>
         </div>
@@ -175,7 +178,7 @@ const Navbar = () => {
                 {user.displayName || 'User'}
               </span>
               {isDropdownOpen && (
-                <ul className="absolute right-0 mt-2 w-48 bg-base-100 rounded-box shadow-lg z-50">
+                <ul className="absolute, right-0 mt-2 w-48 bg-base-100 rounded-box shadow-lg z-50">
                   <li className="text-lg hover:text-blue-800 transition">
                     <a
                       href="/profile"
