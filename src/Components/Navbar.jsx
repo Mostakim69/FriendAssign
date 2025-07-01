@@ -217,7 +217,7 @@ const Navbar = () => {
             </button>
           </>
         ) : (
-          <NavLink to="/auth/login" className="btn btn-primary btn-sm">
+          <NavLink to="/auth/login" className="btn btn-primary">
             Login
           </NavLink>
         )}

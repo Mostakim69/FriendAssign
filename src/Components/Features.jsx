@@ -54,8 +54,8 @@ const Features = () => (
               alt={step.title}
               className="h-40 sm:h-44 lg:h-48 w-auto object-contain rounded-xl mb-4"
             />
-            <h3 className="text-lg sm:text-xl font-medium mb-2 text-gray-700">{step.title}</h3>
-            <p className="text-gray-600 text-xs sm:text-sm lg:text-base">{step.description}</p>
+            <h3 className="text-lg sm:text-xl font-medium mb-2 text-base">{step.title}</h3>
+            <p className="text-xs sm:text-sm text-base">{step.description}</p>
           </div>
         ))}
       </Marquee>
