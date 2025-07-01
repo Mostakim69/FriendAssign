@@ -9,7 +9,7 @@ Welcome to **FriendAssign**,, you will build a web application for online group 
 | ---------------------- | ---------------------------------------------------------------------------------- |
 | **GitHub Client site** | [FriendAssign-client](https://github.com/Mostakim69/HobbyHub)         |
 | **Live Site client**   | [FriendAssign-firebase](https://assignmen-11-app.web.app/)                              |
-| **GitHub server site** | [FriendAssign-server](https://github.com/Mostakim69/HobbyHub-server)         |
+| **GitHub server site** | [FriendAssign-server](https://github.com/Mostakim69/Friend-Assign-server)         |
 | **Portfolio GitHub**   | [Md Mostakim Hosen-portfolio](https://github.com/Mostakim69/My-Portfolio-Website)         |
 | **Portfolio Live**     | [Firebase-live](https://my-portfolio-website-9ba5f.web.app/)                         |
 | **Created On**         | 20 May 2025, 10:32 AM GMT+6                                                        |
