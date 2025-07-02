@@ -10,12 +10,18 @@ import { AuthContext } from '../provider/MyProvider';
 const CreateAssignment = () => {
   const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    title: '', description: '', marks: '', thumbnailUrl: '', difficulty: 'Easy',
-    dueDate: new Date(), userEmail: user?.email || '', userName: user?.displayName || '',
+    title: '',
+    description: '',
+    marks: '',
+    thumbnailUrl: '',
+    difficulty: 'Easy',
+    dueDate: new Date(),
+    userEmail: user?.email || '',
+    userName: user?.displayName || '',
   });
   const [errors, setErrors] = useState({});
   const [imagePreview, setImagePreview] = useState(null);
-  const [showDescriptionMessage, setShowDescriptionMessage] = useState(false); // New state for message visibility
+  const [showDescriptionMessage, setShowDescriptionMessage] = useState(false);
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -35,7 +41,6 @@ const CreateAssignment = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    // Show message if description is being typed and is less than 20 characters
     if (name === 'description') {
       setShowDescriptionMessage(value.length > 0 && value.length < 20);
     }
@@ -49,16 +54,25 @@ const CreateAssignment = () => {
       img.onload = () => setImagePreview(formData.thumbnailUrl);
       img.onerror = () => setImagePreview(null);
       img.src = formData.thumbnailUrl;
-    } else setImagePreview(null);
+    } else {
+      setImagePreview(null);
+    }
   }, [formData.thumbnailUrl]);
 
   useEffect(() => {
-    setFormData((prev) => ({ ...prev, userEmail: user?.email || '', userName: user?.displayName || '' }));
+    setFormData((prev) => ({
+      ...prev,
+      userEmail: user?.email || '',
+      userName: user?.displayName || '',
+    }));
   }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return Swal.fire({ icon: 'error', title: 'Validation Error', text: 'Fix form errors.' });
+    if (!validateForm()) {
+      return Swal.fire({ icon: 'error', title: 'Validation Error', text: 'Please fix the errors in the form.' });
+    }
+
     try {
       const response = await fetch('https://assignment-11-server-iota-three.vercel.app/api/assignments', {
         method: 'POST',
@@ -69,14 +83,29 @@ const CreateAssignment = () => {
           dueDate: formData.dueDate.toISOString(),
         }),
       });
+
       if (response.ok) {
-        Swal.fire({ icon: 'success', title: 'Success', text: 'Assignment created!', timer: 2000, showConfirmButton: false })
-          .then(() => {
-            setFormData({ title: '', description: '', marks: '', thumbnailUrl: '', difficulty: 'Easy', dueDate: new Date(), userEmail: user?.email || '', userName: user?.displayName || '' });
-            setImagePreview(null);
-            setShowDescriptionMessage(false); // Reset message visibility
-            navigate('/assignments');
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Assignment created successfully!',
+          timer: 2000,
+          showConfirmButton: false,
+        }).then(() => {
+          setFormData({
+            title: '',
+            description: '',
+            marks: '',
+            thumbnailUrl: '',
+            difficulty: 'Easy',
+            dueDate: new Date(),
+            userEmail: user?.email || '',
+            userName: user?.displayName || '',
           });
+          setImagePreview(null);
+          setShowDescriptionMessage(false);
+          navigate('/assignments');
+        });
       } else throw new Error('Failed to create assignment');
     } catch (error) {
       Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to save assignment.' });
@@ -86,29 +115,51 @@ const CreateAssignment = () => {
   return (
     <>
       <Navbar />
-      <main className="flex-grow pt-20 pb-20">
-        <div className="container mx-auto p-4">
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 p-6 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">New Assignment</h2>
+      <main className="min-h-screen pt-16 mt-14 pb-12 dark:from-gray-900 dark:to-gray-800">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <form
+            onSubmit={handleSubmit}
+            className="max-w-full sm:max-w-2xl md:max-w-3xl mx-auto bg-white dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-2xl shadow-lg sm:shadow-xl transition-all duration-300"
+          >
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold mb-4 sm:mb-6 text-center sm:text-base text-gray-600 dark:text-gray-300">
+              📘 Create New Assignment
+            </h2>
+            <p className="text-center text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
+              Fill out the form below to create a new assignment for your students.
+              Ensure all details are accurate before submitting.
+            </p>
+
             {['userEmail', 'userName', 'title', 'description', 'marks', 'thumbnailUrl'].map((field) => (
-              <div key={field} className="mb-4">
-                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">{field === 'userEmail' ? 'User Email' : field === 'userName' ? 'User Name' : field.charAt(0).toUpperCase() + field.slice(1)}</label>
+              <div key={field} className="mb-4 sm:mb-5">
+                <label className="block text-xs sm:text-sm font-semibold mb-1 sm:mb-2 text-gray-700 dark:text-gray-100">
+                  {field === 'userEmail'
+                    ? 'User Email'
+                    : field === 'userName'
+                    ? 'User Name'
+                    : field.charAt(0).toUpperCase() + field.slice(1)}
+                </label>
+
                 {field === 'description' ? (
                   <>
                     <textarea
                       name="description"
                       value={formData.description}
                       onChange={handleChange}
-                      className={`w-full p-2 border rounded bg-white dark:bg-gray-800 dark:text-gray-200 ${errors.description ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`}
-                      placeholder="Detailed assignment description"
+                      rows="4"
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400 text-xs sm:text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 placeholder-gray-400 dark:placeholder-gray-500 ${
+                        errors.description ? 'border-red-400' : 'border-gray-200 dark:border-gray-600 hover:border-teal-300'
+                      }`}
+                      placeholder="Write a detailed description..."
                       required
                     />
                     {showDescriptionMessage && (
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        📝 Please write a bit more! The description should be at least 20 characters long so others can clearly understand your assignment.
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 animate-pulse">
+                        📝 Description must be at least 20 characters.
                       </p>
                     )}
-                    {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
+                    {errors.description && (
+                      <p className="text-xs text-red-500 mt-1">{errors.description}</p>
+                    )}
                   </>
                 ) : (
                   <input
@@ -117,42 +168,79 @@ const CreateAssignment = () => {
                     value={formData[field]}
                     onChange={field === 'userEmail' || field === 'userName' ? undefined : handleChange}
                     readOnly={field === 'userEmail' || field === 'userName'}
-                    className={`w-full p-2 border rounded ${field === 'userEmail' || field === 'userName' ? 'bg-gray-100 dark:bg-gray-700 cursor-not-allowed' : 'bg-white dark:bg-gray-800'} dark:text-gray-200 ${errors[field] ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`}
-                    placeholder={field === 'thumbnailUrl' ? 'https://example.com/image.jpg' : `${field.charAt(0).toUpperCase() + field.slice(1)}`}
+                    className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400 text-xs sm:text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
+                      field === 'userEmail' || field === 'userName'
+                        ? 'bg-gray-100 dark:bg-gray-600 cursor-not-allowed'
+                        : 'bg-white dark:bg-gray-700'
+                    } ${
+                      errors[field] ? 'border-red-400' : 'border-gray-200 dark:border-gray-600 hover:border-teal-300'
+                    }`}
+                    placeholder={
+                      field === 'thumbnailUrl'
+                        ? 'https://example.com/image.jpg'
+                        : `${field.charAt(0).toUpperCase() + field.slice(1)}`
+                    }
                     required
                   />
                 )}
-                {errors[field] && field !== 'description' && <p className="text-red-500 text-sm">{errors[field]}</p>}
+                {errors[field] && field !== 'description' && (
+                  <p className="text-xs text-red-500 mt-1">{errors[field]}</p>
+                )}
               </div>
             ))}
-            <div className="mb-4 flex space-x-4">
-              <div className="w-1/2">
-                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">Difficulty</label>
+
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-4 sm:mb-6">
+              <div className="w-full sm:w-1/2">
+                <label className="block text-xs sm:text-sm font-semibold mb-1 sm:mb-2 text-gray-700 dark:text-gray-100">
+                  Difficulty
+                </label>
                 <select
                   name="difficulty"
                   value={formData.difficulty}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded bg-white dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg bg-white dark:bg-gray-700 text-xs sm:text-sm text-gray-900 dark:text-white border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-400 hover:border-teal-300 transition-all duration-300"
                 >
                   <option value="Easy">Easy</option>
                   <option value="Medium">Medium</option>
                   <option value="Hard">Hard</option>
                 </select>
               </div>
-              <div className="w-1/2">
-                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-200">Due Date</label>
+
+              <div className="w-full sm:w-1/2">
+                <label className="block text-xs sm:text-sm font-semibold mb-1 sm:mb-2 text-gray-700 dark:text-gray-100">
+                  Due Date
+                </label>
                 <DatePicker
                   selected={formData.dueDate}
                   onChange={handleDateChange}
-                  className={`w-full p-2 border rounded bg-white dark:bg-gray-800 dark:text-gray-200 ${errors.dueDate ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'}`}
+                  className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg bg-white dark:bg-gray-700 text-xs sm:text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all duration-300 ${
+                    errors.dueDate ? 'border-red-400' : 'border-gray-200 dark:border-gray-600 hover:border-teal-300'
+                  }`}
                   dateFormat="MMMM d, yyyy"
                   minDate={new Date()}
+                  popperClassName="z-50 w-full sm:w-auto"
+                  wrapperClassName="w-full"
                 />
-                {errors.dueDate && <p className="text-red-500 text-sm">{errors.dueDate}</p>}
+                {errors.dueDate && <p className="text-xs text-red-500 mt-1">{errors.dueDate}</p>}
               </div>
             </div>
-            {imagePreview && <div className="mb-4"><img src={imagePreview} alt="Thumbnail Preview" className="w-full max-h-[150px] object-cover rounded" /></div>}
-            <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">Create Assignment</button>
+
+            {imagePreview && (
+              <div className="mb-4 sm:mb-6">
+                <img
+                  src={imagePreview}
+                  alt="Thumbnail Preview"
+                  className="w-full max-w-[16rem] sm:max-w-[20rem] md:max-w-[24rem] mx-auto h-auto rounded-lg border border-gray-200 dark:border-gray-600 shadow-md hover:shadow-lg transition-all duration-300"
+                />
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-teal-500 to-coral-500 cursor-pointer hover:from-teal-600 hover:to-coral-600 text-white py-3 sm:py-4 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 text-sm sm:text-base"
+            >
+              🚀 Create Assignment
+            </button>
           </form>
         </div>
       </main>
