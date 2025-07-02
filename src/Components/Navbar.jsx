@@ -25,9 +25,9 @@ const Navbar = () => {
       '/assignments': 'subscription-services',
       '/auth/pending-assignments': 'pending-assignments',
       '/auth/create-assignments': 'create-assignments',
-      '/contact': 'contact',
       '/profile': 'profile',
       '/auth/my-group': 'my-group',
+      '/contact': 'contact-section', // Map /contact to contact-section
     };
     const currentSection = pathToSectionMap[location.pathname] || '';
     setActiveSection(currentSection);
@@ -48,15 +48,27 @@ const Navbar = () => {
     e.preventDefault();
     setIsNavLoading(true);
     setActiveSection(sectionId);
+
     setTimeout(() => {
       if (path === '/' && sectionId !== 'home') {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth' });
+        // If on homepage, scroll to the section
+        if (location.pathname === '/') {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }
         } else {
-          navigate(path);
+          // Navigate to homepage first, then scroll to section
+          navigate('/');
+          setTimeout(() => {
+            const section = document.getElementById(sectionId);
+            if (section) {
+              section.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 100); // Small delay to ensure navigation completes
         }
       } else {
+        // For other routes, navigate and scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
         navigate(path);
       }
@@ -104,9 +116,9 @@ const Navbar = () => {
       requiresAuth: true,
       message: 'Please log in to create assignments!',
     },
-    { id: 'benifit-section', label: 'Features', path: '/' },
-    { id: 'faq-section', label: 'FAQ', path: '/' },
-    { id: 'contact', label: 'Contact', path: '/contact', isNavLink: true },
+    { id: 'benifit-section', label: 'Features', path: '/', isNavLink: false },
+    { id: 'faq-section', label: 'FAQ', path: '/', isNavLink: false },
+    { id: 'contact-section', label: 'Contact', path: '/', isNavLink: false }, // Updated to contact-section
   ]
     .filter(({ requiresAuth }) => !requiresAuth || (requiresAuth && user))
     .map(({ id, label, path, isNavLink, requiresAuth, message }) => (

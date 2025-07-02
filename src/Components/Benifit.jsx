@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 const textVariants = {
   hidden: { opacity: 0, x: 50 },
@@ -9,7 +9,7 @@ const textVariants = {
 };
 
 const Benifit = () => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   const items = [
     "👥 Collaborative Group Study",
@@ -20,23 +20,22 @@ const Benifit = () => {
     "📱 Responsive Interface",
   ];
 
-  // Function to handle button click
   const handleJoinUsClick = () => {
-    navigate("/auth/create-assignments"); // Navigate to create-assignments page
+    navigate("/auth/create-assignments");
   };
 
   return (
-    <section className="flex flex-col md:flex-row items-center p-10 md:p-20 gap-8 min-h-screen bg-transparent">
-      <div className="md:w-1/2 mb-6 md:mb-0">
+    <section className="flex flex-col md:flex-row items-center justify-center p-4 sm:p-8 md:p-12 lg:p-20 gap-6 sm:gap-8 bg-transparent max-w-screen-xl mx-auto">
+      <div className="w-full md:w-1/2 mb-6 md:mb-0">
         <img
           src="https://i.postimg.cc/0NKjPkhH/0f770ed96ae280e123c40e90be24a604.jpg"
           alt="Crate with vegetables"
-          className="rounded-lg shadow-lg w-full h-auto"
+          className="rounded-lg shadow-lg w-full h-auto object-cover"
         />
       </div>
-      <div className="md:w-1/2">
+      <div className="w-full md:w-1/2 pl-4 sm:pl-4 md:pl-8 lg:pl-12">
         <motion.h2
-          className="text-2xl md:text-4xl font-bold text-white mb-4"
+          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4"
           variants={textVariants}
           initial="hidden"
           whileInView="visible"
@@ -45,7 +44,7 @@ const Benifit = () => {
           Make learning simple and fun
         </motion.h2>
         <motion.p
-          className="text-white mb-6 text-sm md:text-lg"
+          className="text-sm sm:text-base md:text-lg mb-6"
           variants={textVariants}
           initial="hidden"
           whileInView="visible"
@@ -64,7 +63,7 @@ const Benifit = () => {
           {items.map((item, i) => (
             <motion.li
               key={i}
-              className="text-white text-sm md:text-base"
+              className="text-sm sm:text-base md:text-base"
               variants={textVariants}
               whileHover="hover"
               transition={{ delay: 0.4 + i * 0.1 }}
@@ -74,13 +73,13 @@ const Benifit = () => {
           ))}
         </motion.ul>
         <motion.button
-          className="btn btn-primary"
+          className="btn btn-primary text-sm sm:text-base px-4 py-2"
           variants={textVariants}
           initial="hidden"
           whileInView="visible"
           whileHover="hover"
           transition={{ delay: 0.8 }}
-          onClick={handleJoinUsClick} // Add onClick handler
+          onClick={handleJoinUsClick}
         >
           Create Assignment
         </motion.button>

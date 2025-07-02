@@ -12,7 +12,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-blue-200 text-gray-700 p-4 sm:p-6">
+    <footer className="bg-blue-200 text-gray-700 p-4 mt-12 sm:p-6">
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6">
         <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
           <NavLink to="/" className="btn btn-ghost text-lg sm:text-xl text-blue-600 flex items-center gap-2 mb-2">

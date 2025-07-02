@@ -13,6 +13,7 @@ import UpdateGroup from '../pages/UpdateGroup';
 import AllGroup from '../Components/AllGroup';
 import CreateAssignment from '../pages/CreateAssignment';
 import Pending from '../Components/Pending';
+import Contact from '../pages/Contact';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: 'assignments',
         element: <AllGroup />,
+      },
+      {
+        path: 'contact',
+        element: <Contact/>,
       },
     ],
   },
