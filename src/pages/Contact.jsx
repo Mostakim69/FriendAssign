@@ -61,7 +61,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen py-6 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-6 px-4 ml-10 mr-10 sm:m-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-10">
           Contact Us

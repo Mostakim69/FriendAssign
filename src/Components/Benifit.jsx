@@ -25,7 +25,7 @@ const Benifit = () => {
   };
 
   return (
-    <section className="flex flex-col md:flex-row items-center justify-center p-4 sm:p-8 md:p-12 lg:p-20 gap-6 sm:gap-8 bg-transparent max-w-screen-xl mx-auto">
+    <section className="flex flex-col overflow-hidden md:flex-row items-center justify-center p-4 sm:p-8 md:p-12 lg:p-20 gap-6 sm:gap-8 max-w-screen-xl mx-auto">
       <div className="w-full md:w-1/2 mb-6 md:mb-0">
         <img
           src="https://i.postimg.cc/0NKjPkhH/0f770ed96ae280e123c40e90be24a604.jpg"
@@ -63,7 +63,7 @@ const Benifit = () => {
           {items.map((item, i) => (
             <motion.li
               key={i}
-              className="text-sm sm:text-base md:text-base"
+              className="text-sm sm:text-base "
               variants={textVariants}
               whileHover="hover"
               transition={{ delay: 0.4 + i * 0.1 }}
