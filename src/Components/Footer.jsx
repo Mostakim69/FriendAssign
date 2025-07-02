@@ -16,7 +16,7 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6">
         <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
           <NavLink to="/" className="btn btn-ghost text-lg sm:text-xl text-blue-600 flex items-center gap-2 mb-2">
-            <img src="https://i.postimg.cc/CKCqVyqL/955c908b389c6e5ce3763541477c609c.jpg" alt="logo" className="h-6 w-6" />
+            <img src="https://i.postimg.cc/CKCqVyqL/955c908b389c6e5ce3763541477c609c.jpg" alt="logo" className="h-8 w-8 rounded-full" />
             FriendAssign
           </NavLink>
           <p className="text-lg text-gray-600 max-w-xs">
@@ -74,7 +74,7 @@ const Footer = () => {
         </div>
       </div>
       <aside className="text-center mt-6">
-        <p className="text-xs sm:text-sm">© {new Date().getFullYear()} HobbyHub. All rights reserved.</p>
+        <p className="text-xs sm:text-sm">© {new Date().getFullYear()} FriendAssign. All rights reserved.</p>
       </aside>
     </footer>
   );
