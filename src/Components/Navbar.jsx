@@ -195,7 +195,7 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      <div className="navbar-end space-x-4">
+      <div className="navbar-end space-x-2">
         {isNavLoading || loading ? (
           <div className="loading loading-spinner text-primary"></div>
         ) : user ? (
