@@ -12,8 +12,14 @@ const UpdateGroup = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    title: '', description: '', marks: '', thumbnailUrl: '', difficulty: 'Easy',
-    dueDate: new Date(), userEmail: user?.email || '', userName: user?.displayName || '',
+    title: '',
+    description: '',
+    marks: '',
+    thumbnailUrl: '',
+    difficulty: 'Easy',
+    dueDate: new Date(),
+    userEmail: user?.email || '',
+    userName: user?.displayName || '',
   });
   const [errors, setErrors] = useState({});
   const [imagePreview, setImagePreview] = useState(null);
@@ -115,7 +121,10 @@ const UpdateGroup = () => {
       <Navbar />
       <main className="flex-grow pt-20 pb-20">
         <div className="container mx-auto p-4">
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 p-6 rounded-lg shadow-md">
+          <form
+            onSubmit={handleSubmit}
+            className="max-w-md mx-auto bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 p-6 rounded-lg shadow-md text-black"
+          >
             <h2 className="text-2xl font-bold mb-4">Update Assignment</h2>
             {fields.map(({ name, label, type, placeholder, readOnly }) => (
               <div key={name} className="mb-4">
@@ -125,7 +134,7 @@ const UpdateGroup = () => {
                     name={name}
                     value={formData[name]}
                     onChange={handleChange}
-                    className={`w-full p-2 border rounded ${errors[name] ? 'border-red-500' : ''}`}
+                    className={`w-full p-2 border rounded bg-white text-black placeholder-gray-500 ${errors[name] ? 'border-red-500' : ''}`}
                     placeholder={placeholder}
                     required
                   />
@@ -136,7 +145,7 @@ const UpdateGroup = () => {
                     value={formData[name]}
                     onChange={readOnly ? undefined : handleChange}
                     readOnly={readOnly}
-                    className={`w-full p-2 border rounded ${readOnly ? 'bg-gray-100 cursor-not-allowed' : ''} ${errors[name] ? 'border-red-500' : ''}`}
+                    className={`w-full p-2 border rounded bg-white text-black placeholder-gray-500 ${readOnly ? 'bg-gray-100 cursor-not-allowed' : ''} ${errors[name] ? 'border-red-500' : ''}`}
                     placeholder={placeholder}
                     required
                   />
@@ -151,9 +160,11 @@ const UpdateGroup = () => {
                   name="difficulty"
                   value={formData.difficulty}
                   onChange={handleChange}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border rounded bg-white text-black"
                 >
-                  {['Easy', 'Medium', 'Hard'].map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  {['Easy', 'Medium', 'Hard'].map(opt => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
                 </select>
               </div>
               <div className="w-1/2">
@@ -161,7 +172,7 @@ const UpdateGroup = () => {
                 <DatePicker
                   selected={formData.dueDate}
                   onChange={handleDateChange}
-                  className={`w-full p-2 border rounded ${errors.dueDate ? 'border-red-500' : ''}`}
+                  className={`w-full p-2 border rounded bg-white text-black ${errors.dueDate ? 'border-red-500' : ''}`}
                   dateFormat="MMMM d, yyyy"
                   minDate={new Date()}
                 />
@@ -169,7 +180,12 @@ const UpdateGroup = () => {
               </div>
             </div>
             {imagePreview && <img src={imagePreview} alt="Thumbnail Preview" className="w-full max-h-[150px] object-cover rounded mb-4" />}
-            <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Update Assignment</button>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            >
+              Update Assignment
+            </button>
           </form>
         </div>
       </main>
