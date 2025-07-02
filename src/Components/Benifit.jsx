@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 const textVariants = {
   hidden: { opacity: 0, x: 50 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } },
-  hover: { scale: 1.05, transition: { duration: 0.3 } },
+  hover: { scale: 1.05, color: "#60a5fa", transition: { duration: 0.3 } },
 };
 
 const Benifit = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   const items = [
     "👥 Collaborative Group Study",
@@ -21,8 +21,8 @@ const Benifit = () => {
   ];
 
   // Function to handle button click
-  const handleJoinClick = () => {
-    navigate("/assignments"); // Navigate to /assignments page
+  const handleJoinUsClick = () => {
+    navigate("/auth/create-assignments"); // Navigate to create-assignments page
   };
 
   return (
@@ -36,7 +36,7 @@ const Benifit = () => {
       </div>
       <div className="md:w-1/2">
         <motion.h2
-          className="text-2xl md:text-4xl font-bold mb-4"
+          className="text-2xl md:text-4xl font-bold text-white mb-4"
           variants={textVariants}
           initial="hidden"
           whileInView="visible"
@@ -45,7 +45,7 @@ const Benifit = () => {
           Make learning simple and fun
         </motion.h2>
         <motion.p
-          className="mb-6 text-sm md:text-lg"
+          className="text-white mb-6 text-sm md:text-lg"
           variants={textVariants}
           initial="hidden"
           whileInView="visible"
@@ -64,7 +64,7 @@ const Benifit = () => {
           {items.map((item, i) => (
             <motion.li
               key={i}
-              className="text-sm md:text-base"
+              className="text-white text-sm md:text-base"
               variants={textVariants}
               whileHover="hover"
               transition={{ delay: 0.4 + i * 0.1 }}
@@ -80,9 +80,9 @@ const Benifit = () => {
           whileInView="visible"
           whileHover="hover"
           transition={{ delay: 0.8 }}
-          onClick={handleJoinClick} // Add onClick handler
+          onClick={handleJoinUsClick} // Add onClick handler
         >
-          JOIN US
+          Create Assignment
         </motion.button>
       </div>
     </section>

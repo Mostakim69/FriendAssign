@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import Swal from 'sweetalert2';
-import { AuthContext } from '../provider/MyProvider';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -34,9 +32,7 @@ const Banner = () => {
   ];
 
   const styleRef = useRef(false);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     if (!styleRef.current) {
@@ -48,29 +44,7 @@ const Banner = () => {
   }, []);
 
   const handleCreateClick = () => {
-    if (!user) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Not Logged In',
-        text: 'Please log in to create an assignment.',
-        showCancelButton: true,
-        confirmButtonText: 'Go to Login',
-        cancelButtonText: 'Cancel',
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate('/auth/login');
-        }
-      });
-      return;
-    }
-
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      navigate('/auth/create-assignments');
-    }, 1500);
+    navigate('/assignments'); // Navigate directly to assignments page
   };
 
   return (
@@ -82,7 +56,7 @@ const Banner = () => {
       pagination={{ clickable: true }}
       navigation
       className="min-w-full mt-20"
-      style={{ height: '70vh' }} // base height for desktop
+      style={{ height: '70vh' }}
     >
       {backgroundImages.map((image, index) => (
         <SwiperSlide key={index}>
@@ -103,7 +77,7 @@ const Banner = () => {
                 </h1>
                 <p className="mb-4 font-bold animate-text animate-text-delay-1
                               text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto">
-                  Collaborate with friends, share assignments, and grow together  in an engaging online study environment.
+                  Collaborate with friends, share assignments, and grow together in an engaging online study environment.
                 </p>
                 <div className="mb-2 max-w-md mx-auto sm:max-w-lg">
                   <p className="flex items-center space-x-2 text-white mb-2 animate-text animate-text-delay-2 text-sm sm:text-base md:text-lg">
@@ -116,24 +90,12 @@ const Banner = () => {
                 <button
                   className="btn btn-primary mt-4 animate-text animate-text-delay-4 px-4 py-2 text-sm sm:text-base md:text-lg"
                   onClick={handleCreateClick}
-                  disabled={isLoading}
                 >
-                  {isLoading ? (
-                    <span className="flex items-center space-x-2">
-                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      <span>Loading...</span>
-                    </span>
-                  ) : (
-                    '👉 Create First Assignment'
-                  )}
+                  👉 View All Assignment
                 </button>
               </div>
             </div>
 
-            {/* Scroll Indicator Arrow */}
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
               <svg
                 className="animate-bounce w-6 h-6 text-white"

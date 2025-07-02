@@ -135,8 +135,8 @@ const CreateAssignment = () => {
                   {field === 'userEmail'
                     ? 'User Email'
                     : field === 'userName'
-                    ? 'User Name'
-                    : field.charAt(0).toUpperCase() + field.slice(1)}
+                      ? 'User Name'
+                      : field.charAt(0).toUpperCase() + field.slice(1)}
                 </label>
 
                 {field === 'description' ? (
@@ -146,9 +146,8 @@ const CreateAssignment = () => {
                       value={formData.description}
                       onChange={handleChange}
                       rows="4"
-                      className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400 text-xs sm:text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 placeholder-gray-400 dark:placeholder-gray-500 ${
-                        errors.description ? 'border-red-400' : 'border-gray-200 dark:border-gray-600 hover:border-teal-300'
-                      }`}
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400 text-xs sm:text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 placeholder-gray-400 dark:placeholder-gray-500 ${errors.description ? 'border-red-400' : 'border-gray-200 dark:border-gray-600 hover:border-teal-300'
+                        }`}
                       placeholder="Write a detailed description..."
                       required
                     />
@@ -168,13 +167,11 @@ const CreateAssignment = () => {
                     value={formData[field]}
                     onChange={field === 'userEmail' || field === 'userName' ? undefined : handleChange}
                     readOnly={field === 'userEmail' || field === 'userName'}
-                    className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400 text-xs sm:text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${
-                      field === 'userEmail' || field === 'userName'
+                    className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-400 text-xs sm:text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 ${field === 'userEmail' || field === 'userName'
                         ? 'bg-gray-100 dark:bg-gray-600 cursor-not-allowed'
                         : 'bg-white dark:bg-gray-700'
-                    } ${
-                      errors[field] ? 'border-red-400' : 'border-gray-200 dark:border-gray-600 hover:border-teal-300'
-                    }`}
+                      } ${errors[field] ? 'border-red-400' : 'border-gray-200 dark:border-gray-600 hover:border-teal-300'
+                      }`}
                     placeholder={
                       field === 'thumbnailUrl'
                         ? 'https://example.com/image.jpg'
@@ -213,9 +210,8 @@ const CreateAssignment = () => {
                 <DatePicker
                   selected={formData.dueDate}
                   onChange={handleDateChange}
-                  className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg bg-white dark:bg-gray-700 text-xs sm:text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all duration-300 ${
-                    errors.dueDate ? 'border-red-400' : 'border-gray-200 dark:border-gray-600 hover:border-teal-300'
-                  }`}
+                  className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg bg-white dark:bg-gray-700 text-xs sm:text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-400 transition-all duration-300 ${errors.dueDate ? 'border-red-400' : 'border-gray-200 dark:border-gray-600 hover:border-teal-300'
+                    }`}
                   dateFormat="MMMM d, yyyy"
                   minDate={new Date()}
                   popperClassName="z-50 w-full sm:w-auto"
@@ -230,7 +226,7 @@ const CreateAssignment = () => {
                 <img
                   src={imagePreview}
                   alt="Thumbnail Preview"
-                  className="w-full max-w-[16rem] sm:max-w-[20rem] md:max-w-[24rem] mx-auto h-auto rounded-lg border border-gray-200 dark:border-gray-600 shadow-md hover:shadow-lg transition-all duration-300"
+                  className="w-full h-40 sm:h-48 md:h-56 object-cover rounded-lg border border-gray-200 dark:border-gray-600 shadow-md hover:shadow-lg transition-all duration-300"
                 />
               </div>
             )}
