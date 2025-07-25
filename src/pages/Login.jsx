@@ -86,6 +86,8 @@ const Login = () => {
               className={`input w-full ${errors.password ? 'border-red-500' : ''}`}
               placeholder="Password"
               value={formData.password}
+              onChange={handleChange}
+              required
             />
             <span
               className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
