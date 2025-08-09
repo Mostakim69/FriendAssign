@@ -7,7 +7,10 @@ const Navbar = () => {
   const { user, logOut, loading } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(
+    localStorage.getItem('theme') || 
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [isNavLoading, setIsNavLoading] = useState(false);
@@ -27,11 +30,22 @@ const Navbar = () => {
       '/auth/create-assignments': 'create-assignments',
       '/profile': 'profile',
       '/auth/my-group': 'my-group',
-      '/contact': 'contact-section', // Map /contact to contact-section
+      '/contact': 'contact-section', 
     };
     const currentSection = pathToSectionMap[location.pathname] || '';
     setActiveSection(currentSection);
   }, [location.pathname]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.relative')) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   const handleThemeToggle = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
@@ -50,30 +64,27 @@ const Navbar = () => {
     setActiveSection(sectionId);
 
     setTimeout(() => {
-      if (path === '/' && sectionId !== 'home') {
-        // If on homepage, scroll to the section
+      if (path === '/' || sectionId === 'contact-section') { // Handle contact-section explicitly
         if (location.pathname === '/') {
           const section = document.getElementById(sectionId);
           if (section) {
             section.scrollIntoView({ behavior: 'smooth' });
           }
         } else {
-          // Navigate to homepage first, then scroll to section
           navigate('/');
           setTimeout(() => {
             const section = document.getElementById(sectionId);
             if (section) {
               section.scrollIntoView({ behavior: 'smooth' });
             }
-          }, 100); // Small delay to ensure navigation completes
+          }, 100);
         }
       } else {
-        // For other routes, navigate and scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
         navigate(path);
       }
       setIsNavLoading(false);
-    }, 500);
+    }, 200);
   };
 
   const handleGroupClick = (e, path, message, sectionId) => {
@@ -85,7 +96,7 @@ const Navbar = () => {
       setTimeout(() => {
         navigate(path);
         setIsNavLoading(false);
-      }, 500);
+      }, 200);
     } else {
       Swal.fire({
         icon: 'warning',
@@ -118,16 +129,17 @@ const Navbar = () => {
     },
     { id: 'benifit-section', label: 'Features', path: '/', isNavLink: false },
     { id: 'faq-section', label: 'FAQ', path: '/', isNavLink: false },
-    { id: 'contact-section', label: 'Contact', path: '/', isNavLink: false }, // Updated to contact-section
+    { id: 'contact-section', label: 'Contact', path: '/', isNavLink: false }, // Updated to scroll to contact-section
   ]
     .filter(({ requiresAuth }) => !requiresAuth || (requiresAuth && user))
     .map(({ id, label, path, isNavLink, requiresAuth, message }) => (
-      <li key={id} className="text-lg hover:text-blue-800 transition">
+      <li key={id} className="text-lg hover:text-blue-600 transition">
         {isNavLink && requiresAuth ? (
           <a
             href={path}
             onClick={(e) => handleGroupClick(e, path, message, id)}
             className={`mx-1 ${activeSection === id ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+            aria-current={activeSection === id ? 'page' : undefined}
           >
             {label}
           </a>
@@ -136,6 +148,7 @@ const Navbar = () => {
             href={path}
             onClick={(e) => handleSectionClick(id, e, path)}
             className={`mx-1 ${activeSection === id ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+            aria-current={activeSection === id ? 'page' : undefined}
           >
             {label}
           </a>
@@ -145,30 +158,33 @@ const Navbar = () => {
 
   // Dropdown menu component
   const ProfileDropdown = () => (
-    <ul className="absolute right-0 mt-2 w-48 bg-base-100 rounded-box shadow-lg z-50">
-      <li className="text-lg hover:text-blue-800 transition">
+    <ul className="absolute right-0 mt-2 w-48 bg-base-100 text-base-content rounded-box shadow-lg z-50">
+      <li className="text-lg hover:text-blue-600 transition">
         <a
           href="/profile"
           onClick={(e) => handleSectionClick('profile', e, '/profile')}
           className={activeSection === 'profile' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
+          aria-current={activeSection === 'profile' ? 'page' : undefined}
         >
           Profile
         </a>
       </li>
-      <li className="text-lg hover:text-blue-800 transition">
+      <li className="text-lg hover:text-blue-600 transition">
         <a
           href="/auth/create-assignments"
           onClick={(e) => handleSectionClick('create-assignments', e, '/auth/create-assignments')}
           className={activeSection === 'create-assignments' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
+          aria-current={activeSection === 'create-assignments' ? 'page' : undefined}
         >
           Create Assignments
         </a>
       </li>
-      <li className="text-lg hover:text-blue-800 transition">
+      <li className="text-lg hover:text-blue-600 transition">
         <a
           href="/auth/my-group"
           onClick={(e) => handleGroupClick(e, '/auth/my-group', 'Please log in to view your groups!', 'my-group')}
           className={activeSection === 'my-group' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
+          aria-current={activeSection === 'my-group' ? 'page' : undefined}
         >
           My Attempted Assignments
         </a>
@@ -177,10 +193,16 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100 mx-auto px-8 md:px-12 lg:px-16 xl:px-24 fixed top-0 left-0 right-0 z-50 shadow-md">
+    <div className="navbar mx-auto px-8 md:px-12 lg:px-16 xl:px-24 fixed top-0 left-0 right-0 z-50 shadow-sm">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost lg:hidden"
+            aria-expanded={isDropdownOpen}
+            aria-label="Toggle menu"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -191,11 +213,11 @@ const Navbar = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </div>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-1">
+          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-1">
             {links}
           </ul>
         </div>
-        <NavLink to="/" className="btn btn-ghost text-xl text-blue-600 flex items-center gap-2">
+        <NavLink to="/" className="btn btn-ghost text-xl flex items-center gap-2">
           <img
             src="https://i.postimg.cc/CKCqVyqL/955c908b389c6e5ce3763541477c609c.jpg"
             alt="logo-icon"
@@ -209,27 +231,28 @@ const Navbar = () => {
       </div>
       <div className="navbar-end space-x-2">
         {isNavLoading || loading ? (
-          <div className="loading loading-spinner text-primary"></div>
+          <div className="loading loading-spinner text-primary-content"></div>
         ) : user ? (
           <>
-            <div className="relative">
+            <div className="relative group">
               <img
                 src={user.photoURL || 'https://i.postimg.cc/FsGnTCZM/a315ddcdff8d5f80ec702cb4553c9589.jpg'}
                 alt="User profile"
                 className="h-10 w-10 rounded-full cursor-pointer"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                aria-label={`Profile of ${user.displayName || 'User'}`}
               />
               <span className="absolute hidden group-hover:block bg-gray-800 text-white text-sm rounded py-1 px-2 top-1/2 -left-40 transform -translate-y-1/2">
                 {user.displayName || 'User'}
               </span>
               {isDropdownOpen && <ProfileDropdown />}
             </div>
-            <button onClick={handleLogout} className="btn btn-primary btn-sm">
+            <button onClick={handleLogout} className="btn btn-secondary btn-sm">
               Logout
             </button>
           </>
         ) : (
-          <NavLink to="/auth/login" className="btn btn-primary">
+          <NavLink to="/auth/login" className="btn btn-secondary">
             Login
           </NavLink>
         )}
@@ -239,6 +262,7 @@ const Navbar = () => {
             className="theme-controller"
             checked={theme === 'dark'}
             onChange={handleThemeToggle}
+            aria-label="Toggle theme"
           />
           <svg
             className="swap-off h-10 w-10 fill-current"
