@@ -7,29 +7,35 @@ const auth = getAuth(app);
 
 const MyProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
 
     const createUser = (email, password) => {
-        setLoading(true); 
-        return createUserWithEmailAndPassword(auth, email, password).finally(() => setLoading(false));
+        // Don't manually set loading here - let the auth state observer handle it
+        return createUserWithEmailAndPassword(auth, email, password);
     };
 
     const signIn = (email, password) => {
-        setLoading(true);
-        return signInWithEmailAndPassword(auth, email, password).finally(() => setLoading(false));
+        // Don't manually set loading here - let the auth state observer handle it
+        return signInWithEmailAndPassword(auth, email, password);
     };
 
     const logOut = () => {
-        setLoading(true); 
-        return signOut(auth).finally(() => setLoading(false));
+        // Don't manually set loading here - let the auth state observer handle it
+        return signOut(auth);
     };
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            setLoading(false); 
+            setLoading(false);
         });
-        return () => unsubscribe();
+        
+        // Cleanup function
+        return () => {
+            if (unsubscribe && typeof unsubscribe === 'function') {
+                unsubscribe();
+            }
+        };
     }, []);
 
     const authData = {
@@ -39,7 +45,7 @@ const MyProvider = ({ children }) => {
         logOut,
         signIn,
         auth,
-        loading, 
+        loading,
     };
 
     return <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>;
