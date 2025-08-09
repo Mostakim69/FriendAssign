@@ -247,12 +247,12 @@ const Navbar = () => {
               </span>
               {isDropdownOpen && <ProfileDropdown />}
             </div>
-            <button onClick={handleLogout} className="btn btn-secondary btn-sm">
+            <button onClick={handleLogout} className="btn btn-primary btn-sm">
               Logout
             </button>
           </>
         ) : (
-          <NavLink to="/auth/login" className="btn btn-secondary">
+          <NavLink to="/auth/login" className="btn btn-primary">
             Login
           </NavLink>
         )}
