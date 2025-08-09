@@ -59,11 +59,11 @@ const TrendingAssignments = () => {
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 group-hover:bg-black/10 transition-all duration-300" />
-                <div className="absolute top-3 left-3 bg-sky-700/90 px-3 py-1 text-xs rounded-full font-semibold shadow shadow-cyan-800">
+                <div className="absolute top-3 left-3 bg-primary px-3 py-1 text-xs rounded-full font-semibold shadow shadow-cyan-800">
                   🚀 New Assign
                 </div>
                 <div className="relative z-10 p-4 ">
-                  <h3 className="text-lg font-bold text-sky-300">
+                  <h3 className="text-lg font-bold text-primary">
                     {group.name}
                   </h3>
                   <p className="text-sm text-gray-600 mt-1">
