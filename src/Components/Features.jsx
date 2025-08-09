@@ -24,11 +24,18 @@ const steps = [
       "Collaborate in groups to share knowledge, complete assignments, and stay motivated for better learning outcomes.",
     imageUrl: 'https://i.postimg.cc/VkgCSVVj/09e5217b239e3ddcb202de80f4699465.jpg',
   },
+  {
+    id: 4,
+    title: 'Track Your Progress',
+    description:
+      "Monitor your learning journey with personalized progress tracking and timely feedback to keep you on the right path.",
+    imageUrl: 'https://i.postimg.cc/bJ3x1S3m/05c3beb8411f6beeec70742868db762a.jpg', 
+  },
 ];
 
 const Features = () => (
   <section className="py-8 sm:py-12 lg:py-16 ">
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto px-4 sm:px-6 lg:px-8">
       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-center mb-4 ">
         <Typewriter
           words={["Here's How It Works", 'Only 3 Simple Steps', 'Get Started Now!']}
@@ -52,10 +59,10 @@ const Features = () => (
             <img
               src={step.imageUrl}
               alt={step.title}
-              className="h-40 sm:h-44 lg:h-48 w-auto object-contain rounded-xl mb-4"
+              className="h-40 sm:h-44 lg:h-48 w-60 sm:w-64 lg:w-68 object-cover rounded-xl mb-4"
             />
-            <h3 className="text-lg sm:text-xl font-medium mb-2 text-base">{step.title}</h3>
-            <p className="text-xs sm:text-sm text-base">{step.description}</p>
+            <h3 className=" text-base lg:text-lg sm:text-xl font-medium mb-2 ">{step.title}</h3>
+            <p className="text-xs sm:text-sm lg:text-base">{step.description}</p>
           </div>
         ))}
       </Marquee>
