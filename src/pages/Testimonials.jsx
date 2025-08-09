@@ -129,7 +129,7 @@ const Testimonials = () => {
 
             <section className="py-12 ">
                 <div className="max-w-7xl mx-auto px-4">
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-14 text-gray-900 bg-clip-text drop-shadow-xl animate-pulse">What Our Users Say</h2>
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-14 bg-clip-text drop-shadow-xl animate-pulse">What Our Users Say</h2>
                     <div className="marquee-row">
                         <div className="absolute left-0 top-0 h-full w-16 md:w-24 z-10 pointer-events-none bg-gradient-to-r from-gray-50 to-transparent"></div>
                         <div className="marquee-inner pt-6 pb-4">

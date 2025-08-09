@@ -9,6 +9,7 @@ import Benifit from '../Components/Benifit';
 import LoadingSpinner from '../Components/LoadingSpinner';
 import Contact from '../pages/Contact';
 import Testimonials from '../pages/Testimonials';
+import TrendingAssignments from '../pages/TrendingAssignments';
 
 const HomeLayouts = () => {
   const location = useLocation();
@@ -29,6 +30,7 @@ const HomeLayouts = () => {
           <>
             <Banner />
             <Features />
+            <TrendingAssignments></TrendingAssignments>
             <div id="benifit-section">
               <Benifit />
             </div>
