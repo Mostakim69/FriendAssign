@@ -12,14 +12,14 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-blue-200 text-gray-700 p-4 mt-12 sm:p-6">
+    <footer className="bg-black-200/30 p-4 mt-12 sm:p-6">
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center sm:items-start gap-6">
         <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
           <NavLink to="/" className="btn btn-ghost text-lg sm:text-xl text-blue-600 flex items-center gap-2 mb-2">
             <img src="https://i.postimg.cc/CKCqVyqL/955c908b389c6e5ce3763541477c609c.jpg" alt="logo" className="h-8 w-8 rounded-full" />
             FriendAssign
           </NavLink>
-          <p className="text-lg text-gray-600 max-w-xs">
+          <p className="text-lg max-w-xs">
             FriendAssign helps you connect with peers to collaborate on assignments.
           </p>
         </div>
@@ -58,16 +58,16 @@ const Footer = () => {
         <div className="flex flex-col items-center sm:items-end text-center sm:text-right">
           <h3 className="text-lg font-semibold mb-2">Follow Us</h3>
           <div className="flex gap-4">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-blue-800 transition">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className=" hover:text-blue-800 transition">
               <FaFacebook size={24} />
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-red-500 transition">
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className=" hover:text-red-500 transition">
               <FaYoutube size={24} />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-red-500 transition">
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className=" hover:text-red-500 transition">
               <FaInstagram size={24} />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-blue-800 transition">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className=" hover:text-blue-800 transition">
               <FaTwitter size={24} />
             </a>
           </div>
