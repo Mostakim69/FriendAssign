@@ -8,6 +8,7 @@ import Footer from '../Components/Footer';
 import Benifit from '../Components/Benifit';
 import LoadingSpinner from '../Components/LoadingSpinner';
 import Contact from '../pages/Contact';
+import Testimonials from '../pages/Testimonials';
 
 const HomeLayouts = () => {
   const location = useLocation();
@@ -37,6 +38,7 @@ const HomeLayouts = () => {
             <div id="contact-section">
               <Contact />
             </div>
+            <Testimonials></Testimonials>
           </>
         )}
       </main>

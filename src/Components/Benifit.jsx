@@ -25,12 +25,12 @@ const Benifit = () => {
   };
 
   return (
-    <section className="flex flex-col overflow-hidden md:flex-row items-center justify-center p-4 sm:p-8 md:p-12 lg:p-20 gap-6 sm:gap-8 max-w-screen-xl mx-auto">
+    <section className="flex flex-col overflow-hidden md:flex-row items-center justify-center gap-6 sm:gap-8 mx-4 sm:mx-6 md:mx-10 lg:mx-20 py-6 sm:py-8 md:py-10">
       <div className="w-full md:w-1/2 mb-6 md:mb-0">
         <img
           src="https://i.postimg.cc/0NKjPkhH/0f770ed96ae280e123c40e90be24a604.jpg"
           alt="Crate with vegetables"
-          className="rounded-lg shadow-lg w-full h-auto object-cover"
+          className="rounded-lg shadow-lg w-full max-h-120 object-cover"
         />
       </div>
       <div className="w-full md:w-1/2 pl-4 sm:pl-4 md:pl-8 lg:pl-12">
