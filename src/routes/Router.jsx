@@ -49,7 +49,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'services/:id',
-        element: <PrivateRoute element={<AllGroupDetails />} />, // Protect the route
+        element: <AllGroupDetails />, // Protect the route
       },
       {
         path: 'my-group',
