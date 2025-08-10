@@ -26,8 +26,6 @@ const Navbar = () => {
     const pathToSectionMap = {
       '/': 'home',
       '/assignments': 'subscription-services',
-      '/auth/pending-assignments': 'pending-assignments',
-      '/auth/create-assignments': 'create-assignments',
       '/auth/dashboard': 'dashboard',
       '/profile': 'profile',
       '/auth/my-group': 'my-group',
@@ -65,7 +63,7 @@ const Navbar = () => {
     setActiveSection(sectionId);
 
     setTimeout(() => {
-      if (path === '/' || sectionId === 'contact-section') { // Handle contact-section explicitly
+      if (path === '/' || sectionId === 'contact-section') {
         if (location.pathname === '/') {
           const section = document.getElementById(sectionId);
           if (section) {
@@ -112,22 +110,6 @@ const Navbar = () => {
   const links = [
     { id: 'home', label: 'Home', path: '/', isNavLink: true },
     { id: 'subscription-services', label: 'All Assignments', path: '/assignments', isNavLink: true },
-    {
-      id: 'pending-assignments',
-      label: 'Pending',
-      path: '/auth/pending-assignments',
-      isNavLink: true,
-      requiresAuth: true,
-      message: 'Please log in to view pending assignments!',
-    },
-    {
-      id: 'create-assignments',
-      label: 'Create',
-      path: '/auth/create-assignments',
-      isNavLink: true,
-      requiresAuth: true,
-      message: 'Please log in to create assignments!',
-    },
     {
       id: 'dashboard',
       label: 'Dashboard',
@@ -176,16 +158,6 @@ const Navbar = () => {
           aria-current={activeSection === 'profile' ? 'page' : undefined}
         >
           Profile
-        </a>
-      </li>
-      <li className="text-lg hover:text-blue-600 transition">
-        <a
-          href="/auth/create-assignments"
-          onClick={(e) => handleSectionClick('create-assignments', e, '/auth/create-assignments')}
-          className={activeSection === 'create-assignments' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
-          aria-current={activeSection === 'create-assignments' ? 'page' : undefined}
-        >
-          Create Assignments
         </a>
       </li>
       <li className="text-lg hover:text-blue-600 transition">
