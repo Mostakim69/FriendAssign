@@ -89,7 +89,6 @@ const AllGroup = () => {
   };
 
   const handleViewClick = id => {
-    if (!user) return showLoginError();
     setIsActionLoading(true);
     setTimeout(() => {
       navigate(`/auth/services/${id}`);
