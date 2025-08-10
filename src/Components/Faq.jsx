@@ -53,7 +53,7 @@ const FAQs = () => {
 
     return (
         <section
-            className="max-w-5xl mx-auto px-4 py-20 space-y-12"
+            className="max-w-5xl mx-auto px-4 py-20 space-y-12 overflow-hidden"
             data-aos="fade-in"
         >
             <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-14 bg-clip-text drop-shadow-xl animate-pulse">

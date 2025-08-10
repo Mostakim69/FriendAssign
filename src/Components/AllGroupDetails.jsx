@@ -81,7 +81,7 @@ const AllGroupDetails = () => {
       });
       setIsModalOpen(false);
       setSubmission({ googleDocsLink: '', notes: '' });
-      navigate('/auth/pending-assignments');
+      navigate('/dashb/pending-assignments');
     } catch (error) {
       console.error('Error submitting assignment:', error);
       Swal.fire({

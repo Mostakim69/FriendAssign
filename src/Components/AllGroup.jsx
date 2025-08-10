@@ -107,7 +107,7 @@ const AllGroup = () => {
           Swal.fire({ icon: 'error', title: 'Unauthorized', text: 'You can only edit your own assignments.', confirmButtonColor: '#2563EB' });
           return;
         }
-        navigate(`/auth/updateGroup/${id}`);
+        navigate(`/dashb/updateGroup/${id}`);
         setIsActionLoading(false);
       })
       .catch(() => {

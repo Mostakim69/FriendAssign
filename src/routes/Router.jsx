@@ -15,6 +15,7 @@ import CreateAssignment from '../pages/CreateAssignment';
 import Pending from '../Components/Pending';
 import Contact from '../pages/Contact';
 import Dashboard from '../Components/Dashboard';
+import DashboardLayout from '../Layout/DashboardLayout';
 
 const router = createBrowserRouter([
   {
@@ -52,7 +53,18 @@ const router = createBrowserRouter([
         path: 'services/:id',
         element: <AllGroupDetails />, // Protect the route
       },
+    ],
+  },
+
+  {
+    path: '/dashb',
+    element: <DashboardLayout />,
+    children: [
       {
+        path: 'dashboard',
+        element: <Dashboard />,
+      },
+            {
         path: 'my-group',
         element: <MyAssignments />,
       },
@@ -68,16 +80,13 @@ const router = createBrowserRouter([
         path: 'pending-assignments',
         element: <PrivateRoute element={<Pending />} />,
       },
-      {
-        path: 'dashboard',
-        element: <Dashboard />,
-      },
+      
       {
         path: 'profile',
         element: <Profile />,
       },
-    ],
-  },
+    ]},
+
   {
     path: '/terms',
     element: <Terms />,

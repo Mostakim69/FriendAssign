@@ -21,7 +21,7 @@ const Benifit = () => {
   ];
 
   const handleJoinUsClick = () => {
-    navigate("/auth/create-assignments");
+    navigate("/dashb/create-assignments");
   };
 
   return (

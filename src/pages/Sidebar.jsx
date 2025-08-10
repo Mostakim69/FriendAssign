@@ -28,11 +28,11 @@ const Sidebar = () => {
 
     const links = [
         { to: '/', text: 'Home', icon: '🏠' },
-        { to: '/auth/dashboard', text: 'Overview', icon: '📊' },
-        { to: '/auth/profile', text: 'Profile', icon: '👤' },
-        { to: '/auth/pending-assignments', text: 'Pending Assignments', icon: '⏳' },
-        { to: '/auth/create-assignments', text: 'Create Assignments', icon: '✍️' },
-        { to: '/auth/my-group', text: 'My Attempted Assignments', icon: '📚' },
+        { to: '/dashb/dashboard', text: 'Overview', icon: '📊' },
+        { to: '/dashb/profile', text: 'Profile', icon: '👤' },
+        { to: '/dashb/pending-assignments', text: 'Pending Assignments', icon: '⏳' },
+        { to: '/dashb/create-assignments', text: 'Create Assignments', icon: '✍️' },
+        { to: '/dashb/my-group', text: 'My Attempted Assignments', icon: '📚' },
     ];
 
     if (!user) return null;

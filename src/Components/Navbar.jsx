@@ -26,9 +26,9 @@ const Navbar = () => {
     const pathToSectionMap = {
       '/': 'home',
       '/assignments': 'subscription-services',
-      '/auth/dashboard': 'dashboard',
+      '/dashb/dashboard': 'dashboard',
       '/profile': 'profile',
-      '/auth/my-group': 'my-group',
+      '/dashb/my-group': 'my-group',
       '/contact': 'contact-section', 
     };
     const currentSection = pathToSectionMap[location.pathname] || '';
@@ -113,7 +113,7 @@ const Navbar = () => {
     {
       id: 'dashboard',
       label: 'Dashboard',
-      path: '/auth/dashboard',
+      path: '/dashb/dashboard',
       isNavLink: true,
       requiresAuth: true,
       message: 'Please log in to view your dashboard!',
@@ -152,8 +152,8 @@ const Navbar = () => {
     <ul className="absolute right-0 mt-2 w-48 bg-base-100 text-base-content rounded-box shadow-lg z-50">
       <li className="text-lg hover:text-blue-600 transition">
         <a
-          href="/profile"
-          onClick={(e) => handleSectionClick('profile', e, '/profile')}
+          href="/dashb/profile"
+          onClick={(e) => handleSectionClick('profile', e, '/dashb/profile')}
           className={activeSection === 'profile' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
           aria-current={activeSection === 'profile' ? 'page' : undefined}
         >
@@ -162,8 +162,8 @@ const Navbar = () => {
       </li>
       <li className="text-lg hover:text-blue-600 transition">
         <a
-          href="/auth/my-group"
-          onClick={(e) => handleGroupClick(e, '/auth/my-group', 'Please log in to view your groups!', 'my-group')}
+          href="/dashb/my-group"
+          onClick={(e) => handleGroupClick(e, '/dashb/my-group', 'Please log in to view your groups!', 'my-group')}
           className={activeSection === 'my-group' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
           aria-current={activeSection === 'my-group' ? 'page' : undefined}
         >
@@ -172,8 +172,8 @@ const Navbar = () => {
       </li>
       <li className="text-lg hover:text-blue-600 transition">
         <a
-          href="/auth/dashboard"
-          onClick={(e) => handleGroupClick(e, '/auth/dashboard', 'Please log in to view your dashboard!', 'dashboard')}
+          href="/dashb/dashboard"
+          onClick={(e) => handleGroupClick(e, '/dashb/dashboard', 'Please log in to view your dashboard!', 'dashboard')}
           className={activeSection === 'dashboard' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
           aria-current={activeSection === 'dashboard' ? 'page' : undefined}
         >

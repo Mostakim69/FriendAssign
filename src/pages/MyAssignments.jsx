@@ -61,7 +61,7 @@ const MyAssignments = () => {
       <Navbar />
       <main className="flex-grow pt-20 pb-20">
         <div className="container mx-auto p-4">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">My Assignments</h2>
+          <h2 className="text-3xl font-bold mb-6 text-center">My Assignments</h2>
           {submissions.length === 0 ? (
             <p className="text-gray-600 text-lg text-center">You have not submitted any assignments yet.</p>
           ) : (
