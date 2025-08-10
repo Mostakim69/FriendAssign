@@ -28,6 +28,7 @@ const Navbar = () => {
       '/assignments': 'subscription-services',
       '/auth/pending-assignments': 'pending-assignments',
       '/auth/create-assignments': 'create-assignments',
+      '/auth/dashboard': 'dashboard',
       '/profile': 'profile',
       '/auth/my-group': 'my-group',
       '/contact': 'contact-section', 
@@ -127,9 +128,17 @@ const Navbar = () => {
       requiresAuth: true,
       message: 'Please log in to create assignments!',
     },
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      path: '/auth/dashboard',
+      isNavLink: true,
+      requiresAuth: true,
+      message: 'Please log in to view your dashboard!',
+    },
     { id: 'benifit-section', label: 'Features', path: '/', isNavLink: false },
     { id: 'faq-section', label: 'FAQ', path: '/', isNavLink: false },
-    { id: 'contact-section', label: 'Contact', path: '/', isNavLink: false }, // Updated to scroll to contact-section
+    { id: 'contact-section', label: 'Contact', path: '/', isNavLink: false },
   ]
     .filter(({ requiresAuth }) => !requiresAuth || (requiresAuth && user))
     .map(({ id, label, path, isNavLink, requiresAuth, message }) => (
@@ -189,11 +198,21 @@ const Navbar = () => {
           My Attempted Assignments
         </a>
       </li>
+      <li className="text-lg hover:text-blue-600 transition">
+        <a
+          href="/auth/dashboard"
+          onClick={(e) => handleGroupClick(e, '/auth/dashboard', 'Please log in to view your dashboard!', 'dashboard')}
+          className={activeSection === 'dashboard' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
+          aria-current={activeSection === 'dashboard' ? 'page' : undefined}
+        >
+          Dashboard
+        </a>
+      </li>
     </ul>
   );
 
   return (
-    <div className="navbar mx-auto px-8 md:px-12 lg:px-16 xl:px-24 fixed top-0 left-0 right-0 z-50 shadow-sm">
+    <div className="navbar mx-auto px-8 bg-base-100 md:px-12 lg:px-16 xl:px-24 fixed top-0 left-0 right-0 z-50 shadow-sm">
       <div className="navbar-start">
         <div className="dropdown">
           <div

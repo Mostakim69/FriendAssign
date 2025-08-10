@@ -14,6 +14,7 @@ import AllGroup from '../Components/AllGroup';
 import CreateAssignment from '../pages/CreateAssignment';
 import Pending from '../Components/Pending';
 import Contact from '../pages/Contact';
+import Dashboard from '../Components/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'contact',
-        element: <Contact/>,
+        element: <Contact />,
       },
     ],
   },
@@ -67,16 +68,19 @@ const router = createBrowserRouter([
         path: 'pending-assignments',
         element: <PrivateRoute element={<Pending />} />,
       },
+      {
+        path: 'dashboard',
+        element: <Dashboard />,
+      },
+      {
+        path: 'profile',
+        element: <Profile />,
+      },
     ],
   },
   {
     path: '/terms',
     element: <Terms />,
-  },
-  {
-    path: '/profile',
-    element: <Profile />,
-    errorElement: <ErrorPage />,
   },
 ]);
 
