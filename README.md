@@ -20,6 +20,16 @@ Welcome to **FriendAssign**,, you will build a web application for online group 
 [🔗 Deployed App](FriendAssign) _(https://assignmen-11-app.web.app/)_
 
 ---
+<h1 align="center">📚 FriendAssign — Online Group Study Platform</h1>
+<p align="center">
+  <i>Collaborate, Create, and Grade Assignments with Friends</i>
+</p>
+<p align="center">
+  <img src="https://i.postimg.cc/bvR5Q4QY/FriendAssign-Banner.jpg" width="100%" alt="FriendAssign Banner" />
+</p>
+
+---
+---
 
 ## 📁 Project Structure
 
