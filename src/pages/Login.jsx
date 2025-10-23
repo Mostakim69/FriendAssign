@@ -1,118 +1,150 @@
-import React, { useState, useContext } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../provider/MyProvider';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import Swal from 'sweetalert2';
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import { loginAnimation, loginAnimation2, loginAnimation3 } from "../animation";
+import { AuthContext } from "../provider/MyProvider";
+import LottieAnimation from "../animation/Walking";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
-  const { signIn, auth } = useContext(AuthContext);
+  const { googleLogin, login, loading } = useContext(AuthContext);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [errors, setErrors] = useState({});
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'A valid email is required.';
-    }
-    if (!formData.password || formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters long.';
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleLogin = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Validation Error',
-        text: 'Please fix the errors in the form.',
-      });
+    setError("");
+
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    if (!email || !password) {
+      setError("Please fill in both fields.");
       return;
     }
 
-    signIn(formData.email, formData.password)
-      .then(() => {
-        Swal.fire('Success', 'Login successful!', 'success');
-        navigate('/');
-      })
-      .catch((error) => {
-        Swal.fire('Error', error.message, 'error');
+    try {
+      await login(email, password);
+      setTimeout(() => {
+        Swal.fire({
+          icon: "success",
+          timer: 1000,
+          title: "Success",
+          text: "Successfully logged in!",
+          showConfirmButton: false,
+        });
+        navigate(from, {
+          replace: true,
+        }),
+          1500;
       });
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
-  const handleGoogleLogin = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(() => {
-        Swal.fire('Success', 'Google login successful!', 'success');
-        navigate('/');
-      })
-      .catch((error) => {
-        Swal.fire('Error', error.message, 'error');
+  const handleGoogleLogin = async () => {
+    try {
+      await googleLogin();
+      setTimeout(() => {
+        toast.success("Logged in successfully!");
+        navigate(from, {
+          replace: true,
+        }),
+          1500;
       });
+    } catch (err) {
+      setError("Google login failed.");
+      console.error(err);
+    }
   };
 
   return (
-    <div className="flex justify-center mt-8 min-h-screen items-center">
-      <div className="card bg-base-100 w-full max-w-sm shadow-2xl p-8 rounded-lg">
-        <h2 className="font-semibold text-3xl text-center">Login to Your Account</h2>
-        <form onSubmit={handleLogin} className="card-body">
-          <label className="label">Email</label>
-          <input
-            name="email"
-            type="email"
-            className={`input ${errors.email ? 'border-red-500' : ''}`}
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+    <>
+      <div className="min-h-[90vh] flex items-center justify-evenly gap-9 max-lg:flex-col-reverse max-lg:gap-18  bg-base-200 py-10">
+        <div>
+          <LottieAnimation animation={loginAnimation} />
+        </div>
+        <Helmet>
+          <title>Forgot Password || FlavorBook</title>
+        </Helmet>
+        <div className="w-full max-w-md p-8 bg-white rounded-lg shado">
+          <h2 className="text-3xl font-bold text-center text-primary mb-6">
+            Login
+          </h2>
 
-          <label className="label">Password</label>
-          <div className="relative">
-            <input
-              name="password"
-              type={showPassword ? 'text' : 'password'}
-              className={`input w-full ${errors.password ? 'border-red-500' : ''}`}
-              placeholder="Password"
-              value={formData.password}
-            />
-            <span
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
+          {error && (
+            <div className="alert alert-error mb-4">
+              <span>{error}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            {/* Email Field */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium" htmlFor="email">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="input input-accent w-full mt-2"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            {/* Password Field */}
+            <div className="mb-2">
+              <label className="block text-sm font-medium" htmlFor="password">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                className="input input-accent w-full mt-2"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <Link to="/auth/forgot-password" className="text-primary">
+              Forgot password?
+            </Link>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="btn btn-primary w-full mt-4"
+              disabled={loading}
             >
-              {showPassword ? '🙈' : '👁️'}
-            </span>
-          </div>
-          {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+              Log In
+            </button>
+          </form>
 
-          <button type="submit" className="btn btn-neutral mt-4 w-full">Login</button>
           <button
-            type="button"
             onClick={handleGoogleLogin}
-            className="btn btn-outline mt-2 w-full"
+            className="btn btn-outline w-full mt-4"
+            disabled={loading}
           >
-            Login with Google
+            Sign in with Google
           </button>
-          <p className="font-semibold text-center mt-4">
-            Don't have an account?{' '}
-            <NavLink className="link link-secondary" to="/auth/register">
-              Register
-            </NavLink>
-          </p>
-        </form>
+
+          <div className="mt-4 flex justify-between text-sm">
+            <p>
+              Don't have an account?{" "}
+              <Link to="/auth/register" className="text-primary ml-2">
+                Sign Up
+              </Link>
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
