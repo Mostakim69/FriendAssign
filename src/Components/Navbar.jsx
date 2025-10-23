@@ -1,276 +1,223 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../provider/MyProvider';
-import Swal from 'sweetalert2';
+import React, { useContext, useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../provider/MyProvider";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, logOut, loading } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const [theme, setTheme] = useState(
-    localStorage.getItem('theme') || 
-    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-  );
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
-  const [isNavLoading, setIsNavLoading] = useState(false);
 
-  // Handle theme toggle and persist to localStorage
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light")
+  );
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+
+  // Theme persist
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Sync activeSection with route changes
+  // Track current active route
   useEffect(() => {
-    const pathToSectionMap = {
-      '/': 'home',
-      '/assignments': 'subscription-services',
-      '/dashb/dashboard': 'dashboard',
-      '/profile': 'profile',
-      '/dashb/my-group': 'my-group',
-      '/contact': 'contact-section', 
-    };
-    const currentSection = pathToSectionMap[location.pathname] || '';
-    setActiveSection(currentSection);
+    const path = location.pathname;
+    if (path.startsWith("/dashb/dashboard")) setActiveSection("dashboard");
+    else if (path.startsWith("/dashb/profile")) setActiveSection("profile");
+    else if (path.startsWith("/dashb/my-group")) setActiveSection("my-group");
+    else if (path === "/assignments") setActiveSection("assignments");
+    else if (path === "/") setActiveSection("home");
+    else setActiveSection("");
   }, [location.pathname]);
 
-  // Close dropdown when clicking outside
+  // Close dropdown on outside click
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.target.closest('.relative')) {
-        setIsDropdownOpen(false);
-      }
+    const handleClickOutside = (e) => {
+      const dropdown = document.querySelector(".profile-dropdown");
+      if (dropdown && !dropdown.contains(e.target)) setIsDropdownOpen(false);
     };
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleThemeToggle = () => setTheme(theme === 'light' ? 'dark' : 'light');
+  // Disable scroll when mobile menu open
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
+  }, [isMenuOpen]);
 
-  const handleLogout = () => {
-    logOut()
-      .then(() => {
-        Swal.fire('Success', 'Logged Out successful!', 'success');
-        navigate('/auth/login');
-      })
-      .catch((error) => Swal.fire('Error', error.message, 'error'));
-  };
+  const handleThemeToggle = () =>
+    setTheme(theme === "light" ? "dark" : "light");
 
-  const handleSectionClick = (sectionId, e, path = '/') => {
-    e.preventDefault();
-    setIsNavLoading(true);
-    setActiveSection(sectionId);
-
-    setTimeout(() => {
-      if (path === '/' || sectionId === 'contact-section') {
-        if (location.pathname === '/') {
-          const section = document.getElementById(sectionId);
-          if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
-          }
-        } else {
-          navigate('/');
-          setTimeout(() => {
-            const section = document.getElementById(sectionId);
-            if (section) {
-              section.scrollIntoView({ behavior: 'smooth' });
-            }
-          }, 100);
-        }
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        navigate(path);
-      }
-      setIsNavLoading(false);
-    }, 200);
-  };
-
-  const handleGroupClick = (e, path, message, sectionId) => {
-    e.preventDefault();
-    setIsDropdownOpen(false);
-    if (user) {
-      setActiveSection(sectionId);
-      setIsNavLoading(true);
-      setTimeout(() => {
-        navigate(path);
-        setIsNavLoading(false);
-      }, 200);
-    } else {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Login Required',
-        text: message,
-        confirmButtonText: 'Go to Login',
-      }).then(() => navigate('/auth/login'));
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      Swal.fire("Success", "Logged out successfully!", "success");
+      navigate("/auth/login");
+    } catch (error) {
+      Swal.fire("Error", error.message, "error");
     }
   };
 
-  // Filter links based on user authentication
-  const links = [
-    { id: 'home', label: 'Home', path: '/', isNavLink: true },
-    { id: 'subscription-services', label: 'All Assignments', path: '/assignments', isNavLink: true },
-    {
-      id: 'dashboard',
-      label: 'Dashboard',
-      path: '/dashb/dashboard',
-      isNavLink: true,
-      requiresAuth: true,
-      message: 'Please log in to view your dashboard!',
-    },
-    { id: 'benifit-section', label: 'Features', path: '/', isNavLink: false },
-    { id: 'faq-section', label: 'FAQ', path: '/', isNavLink: false },
-    { id: 'contact-section', label: 'Contact', path: '/', isNavLink: false },
-  ]
-    .filter(({ requiresAuth }) => !requiresAuth || (requiresAuth && user))
-    .map(({ id, label, path, isNavLink, requiresAuth, message }) => (
-      <li key={id} className="text-lg hover:text-blue-600 transition">
-        {isNavLink && requiresAuth ? (
-          <a
-            href={path}
-            onClick={(e) => handleGroupClick(e, path, message, id)}
-            className={`mx-1 ${activeSection === id ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
-            aria-current={activeSection === id ? 'page' : undefined}
-          >
-            {label}
-          </a>
-        ) : (
-          <a
-            href={path}
-            onClick={(e) => handleSectionClick(id, e, path)}
-            className={`mx-1 ${activeSection === id ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
-            aria-current={activeSection === id ? 'page' : undefined}
-          >
-            {label}
-          </a>
-        )}
-      </li>
-    ));
+  const handleNavClick = async (e, id, path) => {
+    e.preventDefault();
+    setActiveSection(id);
+    await navigate(path);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setIsMenuOpen(false);
+  };
 
-  // Dropdown menu component
-  const ProfileDropdown = () => (
-    <ul className="absolute right-0 mt-2 w-48 bg-base-100 text-base-content rounded-box shadow-lg z-50">
-      <li className="text-lg hover:text-blue-600 transition">
-        <a
-          href="/dashb/profile"
-          onClick={(e) => handleSectionClick('profile', e, '/dashb/profile')}
-          className={activeSection === 'profile' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
-          aria-current={activeSection === 'profile' ? 'page' : undefined}
-        >
-          Profile
-        </a>
-      </li>
-      <li className="text-lg hover:text-blue-600 transition">
-        <a
-          href="/dashb/my-group"
-          onClick={(e) => handleGroupClick(e, '/dashb/my-group', 'Please log in to view your groups!', 'my-group')}
-          className={activeSection === 'my-group' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
-          aria-current={activeSection === 'my-group' ? 'page' : undefined}
-        >
-          My Attempted Assignments
-        </a>
-      </li>
-      <li className="text-lg hover:text-blue-600 transition">
-        <a
-          href="/dashb/dashboard"
-          onClick={(e) => handleGroupClick(e, '/dashb/dashboard', 'Please log in to view your dashboard!', 'dashboard')}
-          className={activeSection === 'dashboard' ? 'text-blue-600 border-b-2 border-blue-600 block p-2' : 'block p-2'}
-          aria-current={activeSection === 'dashboard' ? 'page' : undefined}
-        >
-          Dashboard
-        </a>
-      </li>
-    </ul>
-  );
+  const handleProtectedNav = (e, id, path) => {
+    e.preventDefault();
+    if (user) handleNavClick(e, id, path);
+    else {
+      Swal.fire({
+        icon: "warning",
+        title: "Login Required",
+        text: "Please log in to access this page!",
+        confirmButtonText: "Go to Login",
+      }).then(() => navigate("/auth/login"));
+    }
+  };
+
+  const links = [
+    { id: "home", label: "Home", path: "/" },
+    { id: "assignments", label: "All Assignments", path: "/assignments" },
+    { id: "dashboard", label: "Dashboard", path: "/dashb/dashboard", requiresAuth: true },
+    { id: "faq-section", label: "FAQ", path: "/" },
+    { id: "contact", label: "Contact", path: "/" },
+  ];
+
+  const renderLinks = (isMobile = false) =>
+    links.map(({ id, label, path, requiresAuth }) => {
+      const isActive = activeSection === id;
+      const classes = `${isActive ? "text-blue-600 dark:text-blue-400 font-semibold" : "text-base-content"
+        } transition-colors duration-300 ${isMobile ? "w-full text-left py-2" : "px-4"}`;
+      return (
+        <li key={id} className="relative group">
+          {requiresAuth ? (
+            <button onClick={(e) => handleProtectedNav(e, id, path)} className={classes}>
+              {label}
+              <span
+                className={`absolute left-0 -bottom-1 h-[2px] bg-blue-600 dark:bg-blue-400 transition-all duration-300 ${
+                  isActive ? "w-full" : "w-0 group-hover:w-full group-hover:opacity-70"
+                }`}
+              ></span>
+            </button>
+          ) : (
+            <button onClick={(e) => handleNavClick(e, id, path)} className={classes}>
+              {label}
+              <span
+                className={`absolute left-0 -bottom-1 h-[2px] bg-blue-600 dark:bg-blue-400 transition-all duration-300 ${
+                  isActive ? "w-full" : "w-0 group-hover:w-full group-hover:opacity-70"
+                }`}
+              ></span>
+            </button>
+          )}
+        </li>
+      );
+    });
 
   return (
-    <div className="navbar mx-auto px-8 bg-base-100 md:px-12 lg:px-16 xl:px-24 fixed top-0 left-0 right-0 z-50 shadow-sm">
+    <div className="navbar fixed top-0 left-0 right-0 bg-base-100 shadow-sm z-50 px-4 md:px-8 lg:px-16 transition-all duration-300">
+      {/* Left: Logo & Mobile Menu */}
       <div className="navbar-start">
-        <div className="dropdown">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost lg:hidden"
-            aria-expanded={isDropdownOpen}
-            aria-label="Toggle menu"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+        <button
+          className="btn btn-ghost lg:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
-          </div>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 text-base-content rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-1">
-            {links}
-          </ul>
-        </div>
-        <NavLink to="/" className="btn btn-ghost text-xl flex items-center gap-2">
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
+
+        <Link to="/" className="btn btn-ghost text-xl flex items-center gap-2" onClick={() => setActiveSection("home")}>
           <img
             src="https://i.postimg.cc/CKCqVyqL/955c908b389c6e5ce3763541477c609c.jpg"
-            alt="logo-icon"
+            alt="logo"
             className="h-10 w-10 rounded-full"
           />
-          <span className="hidden md:inline">FriendAssign</span>
-        </NavLink>
+          <span className="hidden md:inline font-bold">FriendAssign</span>
+        </Link>
       </div>
+
+      {/* Center: Desktop Menu */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{links}</ul>
+        <ul className="menu menu-horizontal text-lg font-medium space-x-2">{renderLinks()}</ul>
       </div>
-      <div className="navbar-end space-x-2">
-        {isNavLoading || loading ? (
-          <div className="loading loading-spinner text-primary-content"></div>
+
+      {/* Right: Profile + Theme */}
+      <div className="navbar-end space-x-3">
+        {loading ? (
+          <span className="loading loading-spinner text-primary"></span>
         ) : user ? (
           <>
-            <div className="relative group">
+            <div className="relative profile-dropdown">
               <img
-                src={user.photoURL || 'https://i.postimg.cc/FsGnTCZM/a315ddcdff8d5f80ec702cb4553c9589.jpg'}
+                src={user.photoURL || "https://i.postimg.cc/FsGnTCZM/a315ddcdff8d5f80ec702cb4553c9589.jpg"}
                 alt="User profile"
-                className="h-10 w-10 rounded-full cursor-pointer"
+                className="h-10 w-10 rounded-full cursor-pointer border border-base-300 hover:scale-105 transition"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                aria-label={`Profile of ${user.displayName || 'User'}`}
               />
-              <span className="absolute hidden group-hover:block bg-gray-800 text-white text-sm rounded py-1 px-2 top-1/2 -left-40 transform -translate-y-1/2">
-                {user.displayName || 'User'}
-              </span>
-              {isDropdownOpen && <ProfileDropdown />}
+              {isDropdownOpen && (
+                <ul className="absolute right-0 mt-2 w-52 bg-base-100 text-base-content rounded-box shadow-lg z-50">
+                  <li>
+                    <Link to="/dashb/profile" onClick={() => setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-base-200">
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/dashb/my-group" onClick={() => setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-base-200">
+                      My Attempted Assignments
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/dashb/dashboard" onClick={() => setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-base-200">
+                      Dashboard
+                    </Link>
+                  </li>
+                </ul>
+              )}
             </div>
             <button onClick={handleLogout} className="btn btn-primary btn-sm">
               Logout
             </button>
           </>
         ) : (
-          <NavLink to="/auth/login" className="btn btn-primary">
-            Login
-          </NavLink>
+          <Link to="/auth/login" className="btn btn-primary">Login</Link>
         )}
-        <label className="swap swap-rotate ml-4">
-          <input
-            type="checkbox"
-            className="theme-controller"
-            checked={theme === 'dark'}
-            onChange={handleThemeToggle}
-            aria-label="Toggle theme"
-          />
-          <svg
-            className="swap-off h-10 w-10 fill-current"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+
+        {/* Theme toggle */}
+        <label className="swap swap-rotate">
+          <input type="checkbox" checked={theme === "dark"} onChange={handleThemeToggle} aria-label="Toggle theme" />
+          {/* Sun icon */}
+          <svg className="swap-off h-7 w-7 fill-current text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M5.64 17l-.71.71a1 1 0 0 0 1.42 1.42l.71-.71A8 8 0 1 0 12 4a8 8 0 0 0-6.36 13z" />
           </svg>
-          <svg
-            className="swap-on h-10 w-10 fill-current"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+          {/* Moon icon */}
+          <svg className="swap-on h-7 w-7 fill-current text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-9.49-9.49 1 1 0 0 0-1.19-1.19A10 10 0 1 0 22 14.05a1 1 0 0 0-.36-1.05z" />
           </svg>
         </label>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="absolute top-full left-0 w-full bg-base-100 shadow-md p-4 lg:hidden">
+          <ul className="space-y-2 text-lg font-medium">{renderLinks(true)}</ul>
+        </div>
+      )}
     </div>
   );
 };
