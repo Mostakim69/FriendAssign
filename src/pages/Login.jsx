@@ -69,7 +69,7 @@ const Login = () => {
           <LottieAnimation animation={loginAnimation} />
         </div>
         <Helmet>
-          <title>Forgot Password || FlavorBook</title>
+          <title>Forgot Password || FriendAssign</title>
         </Helmet>
         <div className="w-full max-w-md p-8 bg-white rounded-lg shado">
           <h2 className="text-3xl font-bold text-center text-primary mb-6">
