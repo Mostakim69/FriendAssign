@@ -42,9 +42,11 @@ const MyProvider = ({ children }) => {
     });
   };
 
-  const logout = () => {
-    signOut(auth);
-  };
+const logOut = () => {
+  setLoading(true);
+  return signOut(auth);
+};
+
   const authInfo = {
     googleLogin,
     createUser,
@@ -52,7 +54,7 @@ const MyProvider = ({ children }) => {
     updateUser,
     user,
     loading,
-    logout,
+    logOut,
     resetPassword,
   };
 

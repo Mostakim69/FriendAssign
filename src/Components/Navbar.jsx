@@ -10,9 +10,9 @@ const Navbar = () => {
 
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ||
-      (window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light")
+    (window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light")
   );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -65,6 +65,7 @@ const Navbar = () => {
       Swal.fire("Error", error.message, "error");
     }
   };
+
 
   const handleSectionClick = (e, id, path = "/") => {
     e.preventDefault();
@@ -172,58 +173,58 @@ const Navbar = () => {
       </div>
 
       {/* Right: Profile + Theme */}
-     {/* Right: Profile + Theme */}
-<div className="navbar-end flex items-center space-x-3">
-  {loading ? (
-    <span className="loading loading-spinner text-primary"></span>
-  ) : user ? (
-    <>
-      <div className="relative profile-dropdown" ref={dropdownRef}>
-        <img
-          src={user.photoURL || "https://i.postimg.cc/FsGnTCZM/a315ddcdff8d5f80ec702cb4553c9589.jpg"}
-          alt="User profile"
-          className="h-10 w-10 rounded-full cursor-pointer border border-base-300 hover:scale-105 transition"
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        />
-        {isDropdownOpen && (
-          <ul className="absolute right-0 mt-2 w-52 bg-base-100 text-base-content rounded-box shadow-lg z-50">
-            <li>
-              <Link to="/dashb/profile" onClick={() => setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-base-200">
-                Profile
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashb/my-group" onClick={() => setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-base-200">
-                My Attempted Assignments
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashb/dashboard" onClick={() => setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-base-200">
-                Dashboard
-              </Link>
-            </li>
-          </ul>
+      {/* Right: Profile + Theme */}
+      <div className="navbar-end flex items-center space-x-3">
+        {loading ? (
+          <span className="loading loading-spinner text-primary"></span>
+        ) : user ? (
+          <>
+            <div className="relative profile-dropdown" ref={dropdownRef}>
+              <img
+                src={user.photoURL || "https://i.postimg.cc/FsGnTCZM/a315ddcdff8d5f80ec702cb4553c9589.jpg"}
+                alt="User profile"
+                className="h-10 w-10 rounded-full cursor-pointer border border-base-300 hover:scale-105 transition"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              />
+              {isDropdownOpen && (
+                <ul className="absolute right-0 mt-2 w-52 bg-base-100 text-base-content rounded-box shadow-lg z-50">
+                  <li>
+                    <Link to="/dashb/profile" onClick={() => setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-base-200">
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/dashb/my-group" onClick={() => setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-base-200">
+                      My Attempted Assignments
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/dashb/dashboard" onClick={() => setIsDropdownOpen(false)} className="block px-4 py-2 hover:bg-base-200">
+                      Dashboard
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+            <button onClick={handleLogout} className="btn btn-primary btn-sm">
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link to="/auth/login" className="btn btn-primary">Login</Link>
         )}
-      </div>
-      <button onClick={handleLogout} className="btn btn-primary btn-sm">
-        Logout
-      </button>
-    </>
-  ) : (
-    <Link to="/auth/login" className="btn btn-primary">Login</Link>
-  )}
 
-  {/* Theme toggle */}
-  <label className="swap swap-rotate cursor-pointer">
-    <input type="checkbox" checked={theme === "dark"} onChange={handleThemeToggle} aria-label="Toggle theme" />
-    <svg className="swap-off h-7 w-7 fill-current text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M5.64 17l-.71.71a1 1 0 0 0 1.42 1.42l.71-.71A8 8 0 1 0 12 4a8 8 0 0 0-6.36 13z" />
-    </svg>
-    <svg className="swap-on h-7 w-7 fill-current text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-9.49-9.49 1 1 0 0 0-1.19-1.19A10 10 0 1 0 22 14.05a1 1 0 0 0-.36-1.05z" />
-    </svg>
-  </label>
-</div>
+        {/* Theme toggle */}
+        <label className="swap swap-rotate cursor-pointer">
+          <input type="checkbox" checked={theme === "dark"} onChange={handleThemeToggle} aria-label="Toggle theme" />
+          <svg className="swap-off h-7 w-7 fill-current text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M5.64 17l-.71.71a1 1 0 0 0 1.42 1.42l.71-.71A8 8 0 1 0 12 4a8 8 0 0 0-6.36 13z" />
+          </svg>
+          <svg className="swap-on h-7 w-7 fill-current text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-9.49-9.49 1 1 0 0 0-1.19-1.19A10 10 0 1 0 22 14.05a1 1 0 0 0-.36-1.05z" />
+          </svg>
+        </label>
+      </div>
 
 
       {/* Mobile Menu */}
