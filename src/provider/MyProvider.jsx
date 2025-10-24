@@ -65,7 +65,7 @@ const logOut = () => {
       if (currentUser?.email) {
         axios
           .post(
-            "https://worldwide-recipe-chefs-sharing-serv.vercel.app/api/v1/jwt",
+            "https://assignment-11-server-iota-three.vercel.app/api/v1/jwt",
             {
               email: currentUser.email,
             },
