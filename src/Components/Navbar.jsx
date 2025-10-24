@@ -172,9 +172,21 @@ const Navbar = () => {
         <ul className="menu menu-horizontal text-lg font-medium space-x-2">{renderLinks()}</ul>
       </div>
 
+
       {/* Right: Profile + Theme */}
-      {/* Right: Profile + Theme */}
+
       <div className="navbar-end flex items-center space-x-3">
+
+        {/* Theme toggle */}
+        <label className="swap swap-rotate cursor-pointer">
+          <input type="checkbox" checked={theme === "dark"} onChange={handleThemeToggle} aria-label="Toggle theme" />
+          <svg className="swap-off h-7 w-7 fill-current text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M5.64 17l-.71.71a1 1 0 0 0 1.42 1.42l.71-.71A8 8 0 1 0 12 4a8 8 0 0 0-6.36 13z" />
+          </svg>
+          <svg className="swap-on h-7 w-7 fill-current text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-9.49-9.49 1 1 0 0 0-1.19-1.19A10 10 0 1 0 22 14.05a1 1 0 0 0-.36-1.05z" />
+          </svg>
+        </label>
         {loading ? (
           <span className="loading loading-spinner text-primary"></span>
         ) : user ? (
@@ -213,17 +225,6 @@ const Navbar = () => {
         ) : (
           <Link to="/auth/login" className="btn btn-primary">Login</Link>
         )}
-
-        {/* Theme toggle */}
-        <label className="swap swap-rotate cursor-pointer">
-          <input type="checkbox" checked={theme === "dark"} onChange={handleThemeToggle} aria-label="Toggle theme" />
-          <svg className="swap-off h-7 w-7 fill-current text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M5.64 17l-.71.71a1 1 0 0 0 1.42 1.42l.71-.71A8 8 0 1 0 12 4a8 8 0 0 0-6.36 13z" />
-          </svg>
-          <svg className="swap-on h-7 w-7 fill-current text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M21.64 13a1 1 0 0 0-1.05-.14 8 8 0 0 1-9.49-9.49 1 1 0 0 0-1.19-1.19A10 10 0 1 0 22 14.05a1 1 0 0 0-.36-1.05z" />
-          </svg>
-        </label>
       </div>
 
 
