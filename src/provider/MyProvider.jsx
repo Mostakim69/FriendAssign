@@ -1,48 +1,91 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import app from '../firebase/FireBase.config';
+import AOS from "aos";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
+import "aos/dist/aos.css";
+import { createContext, useEffect, useState } from "react";
+import { auth } from "../firebase/firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext();
-const auth = getAuth(app);
-
 const MyProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true); 
+  const [user, setUser] = useState(null);
 
-    const createUser = (email, password) => {
-        setLoading(true); 
-        return createUserWithEmailAndPassword(auth, email, password).finally(() => setLoading(false));
+  const [loading, setLoading] = useState(true);
+  const googleProvider = new GoogleAuthProvider();
+  const googleLogin = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+  const createUser = (email, pass) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, pass);
+  };
+  const login = (email, pass) => signInWithEmailAndPassword(auth, email, pass);
+
+  const updateUser = (name, photo) => {
+    setLoading(true);
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
+  };
+
+  const logout = () => {
+    signOut(auth);
+  };
+  const authInfo = {
+    googleLogin,
+    createUser,
+    login,
+    updateUser,
+    user,
+    loading,
+    logout,
+    resetPassword,
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+      if (currentUser?.email) {
+        axios
+          .post(
+            "https://worldwide-recipe-chefs-sharing-serv.vercel.app/api/v1/jwt",
+            {
+              email: currentUser.email,
+            },
+            {
+              withCredentials: true,
+            },
+          )
+          .then((res) => console.log("res", res.data))
+          .catch((err) => console.log("err", err));
+      }
+    });
+
+    return () => {
+      unsubscribe();
     };
+  }, []);
 
-    const signIn = (email, password) => {
-        setLoading(true);
-        return signInWithEmailAndPassword(auth, email, password).finally(() => setLoading(false));
-    };
-
-    const logOut = () => {
-        setLoading(true); 
-        return signOut(auth).finally(() => setLoading(false));
-    };
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-            setLoading(false); 
-        });
-        return () => unsubscribe();
-    }, []);
-
-    const authData = {
-        user,
-        setUser,
-        createUser,
-        logOut,
-        signIn,
-        auth,
-        loading, 
-    };
-
-    return <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>;
+  return (
+    <>
+      <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+    </>
+  );
 };
 
 export default MyProvider;
