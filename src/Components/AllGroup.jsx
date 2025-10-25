@@ -217,13 +217,13 @@ const AllGroup = () => {
                   <p className="text-sm text-gray-500 dark:text-gray-400 mb-2 truncate">By: {a.userName || 'Anonymous'}</p>
                   <p className="text-base font-semibold text-gray-800 dark:text-gray-200 mb-4">Marks: {a.marks ?? 0}</p>
                   <div className="mt-auto flex justify-end gap-3">
-                    <button onClick={() => handleViewClick(a._id)} title="View" className="p-2 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800 transition">
+                    <button onClick={() => handleViewClick(a._id)} title="View" className="p-2 cursor-pointer rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800 transition">
                       <i className="fas fa-eye"></i>
                     </button>
-                    <button onClick={() => handleEditClick(a._id)} title="Edit" className="p-2 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-200 dark:hover:bg-yellow-800 transition">
+                    <button onClick={() => handleEditClick(a._id)} title="Edit" className="p-2 rounded-full bg-yellow-100 dark:bg-yellow-900 cursor-pointer text-yellow-700 dark:text-yellow-300 hover:bg-yellow-200 dark:hover:bg-yellow-800 transition">
                       <i className="fas fa-edit"></i>
                     </button>
-                    <button onClick={() => handleDeleteClick(a._id)} title="Delete" className="p-2 rounded-full bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-800 transition">
+                    <button onClick={() => handleDeleteClick(a._id)} title="Delete" className="p-2 rounded-full bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 hover:bg-red-200 cursor-pointer dark:hover:bg-red-800 transition">
                       <i className="fas fa-trash-alt"></i>
                     </button>
                   </div>
@@ -234,17 +234,37 @@ const AllGroup = () => {
         )}
 
         {/* Pagination Controls */}
+        {/* Pagination Controls */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2 mt-6">
+          <div className="flex justify-center cursor-pointer items-center gap-2 mt-6">
+            {/* Previous Button */}
+            <button
+              onClick={() => currentPage > 1 && paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 rounded-md ${currentPage === 1 ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+            >
+              Previous
+            </button>
+
+            {/* Numbered Pages */}
             {Array.from({ length: totalPages }, (_, i) => (
               <button
                 key={i}
                 onClick={() => paginate(i + 1)}
-                className={`px-4 py-2 rounded-md ${currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'}`}
+                className={`px-4 py-2 cursor-pointer rounded-md ${currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'}`}
               >
                 {i + 1}
               </button>
             ))}
+
+            {/* Next Button */}
+            <button
+              onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 cursor-pointer rounded-md ${currentPage === totalPages ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+            >
+              Next
+            </button>
           </div>
         )}
       </div>
