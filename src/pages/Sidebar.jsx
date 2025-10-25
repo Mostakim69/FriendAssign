@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../provider/MyProvider';
 import Swal from 'sweetalert2';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 const Sidebar = () => {
     const { user, logOut } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false); // Mobile toggle
 
     const handleLogout = () => {
         logOut()
@@ -18,12 +20,14 @@ const Sidebar = () => {
                 });
                 navigate('/auth/login');
             })
-            .catch((error) => Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error.message,
-                confirmButtonColor: '#3b82f6',
-            }));
+            .catch((error) =>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message,
+                    confirmButtonColor: '#3b82f6',
+                })
+            );
     };
 
     const links = [
@@ -38,32 +42,60 @@ const Sidebar = () => {
     if (!user) return null;
 
     return (
-        <div className="fixed top-0 left-0 w-60 bg-gray-800 h-screen rounded-lg text-white p-4 z-40 overflow-y-auto flex flex-col">
-            <ul className="flex flex-col space-y-1 flex-grow mt-14">
-                {links.map(({ to, text, icon }, i) => (
-                    <li key={i}>
-                        <NavLink
-                            to={to}
-                            className={({ isActive }) =>
-                                `flex items-center gap-2 py-2 px-4 rounded-md text-base font-medium transition-all duration-200 hover:bg-blue-400/10 hover:text-white ${isActive ? 'bg-blue-500 text-white' : 'text-gray-200'
-                                }`
-                            }
-                        >
-                            <span className="text-lg">{icon}</span>
-                            {text}
-                        </NavLink>
-                    </li>
-                ))}
-            </ul>
-            {user && (
+        <>
+            {/* Mobile Hamburger Button */}
+            <button
+                className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white/20 backdrop-blur-md rounded-md shadow-md"
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            </button>
+
+            {/* Sidebar */}
+            <div
+                className={`fixed top-0 left-0 h-screen w-60 md:w-64 z-40 p-4 flex flex-col bg-white/20 backdrop-blur-md border-r border-gray-300/20 transform transition-transform duration-300
+                ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
+            >
+                <h2 className="text-2xl font-bold text-gray-800 mb-8 hidden md:block">
+                    Dashboard
+                </h2>
+                <ul className="flex flex-col space-y-2 flex-grow">
+                    {links.map(({ to, text, icon }, i) => (
+                        <li key={i}>
+                            <NavLink
+                                to={to}
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 py-3 px-4 rounded-lg text-base font-medium transition-all duration-200
+                                    ${
+                                        isActive
+                                            ? 'bg-blue-500 text-white shadow-md'
+                                            : 'text-gray-700 hover:bg-blue-100 hover:text-blue-600'
+                                    }`
+                                }
+                                onClick={() => setIsOpen(false)} // Close sidebar on mobile link click
+                            >
+                                <span className="text-lg">{icon}</span>
+                                {text}
+                            </NavLink>
+                        </li>
+                    ))}
+                </ul>
                 <button
                     onClick={handleLogout}
-                    className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white cursor-pointer font-medium rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-indigo-950"
+                    className="mt-auto w-full py-3 px-4 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-all duration-200 font-medium"
                 >
                     Logout
                 </button>
+            </div>
+
+            {/* Overlay for Mobile */}
+            {isOpen && (
+                <div
+                    className="fixed inset-0 bg-black/20 z-30 md:hidden"
+                    onClick={() => setIsOpen(false)}
+                ></div>
             )}
-        </div>
+        </>
     );
 };
 
