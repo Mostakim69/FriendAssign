@@ -26,29 +26,75 @@ Welcome to **FriendAssign**,, you will build a web application for online group 
 Here's a high-level overview of the project's file structure:
 
 ```
-.
-├── public/               # Static assets (favicon, CNAME, vite.svg)
-├── dist/                 # Production build
-├── src/                  # Main application source code
-│   ├── animation/        # Lottie files and animation components
-│   ├── assets/           # Images, logos, and JSON
-│   ├── components/       # Reusable UI components (Header, Banner, Footer)
-│   ├── hooks/            # Custom React hooks
-│   ├── Layout/           # Route layouts
-│   ├── modules/          # Domain-based modules
-│   │   ├── auth/         # Authentication
-│   │   ├── blogs/        # Blog system
-│   │
-│   ├── pages/            # Page components
-│   ├── provider/         # Context Providers (Auth)
-│   ├── Routes/           # Routing logic
-│   ├── index.css         # Tailwind styles
-│   ├── App.jsx           # Main App component
-│   └── main.jsx          # App bootstrap
-├── README.md             # You're here
-├── vite.config.js        # Vite configuration
-├── eslint.config.js      # Linting rules
-└── package.json          # Project metadata
+├── .env
+├── .firebase
+    └── hosting.ZGlzdA.cache
+├── .firebaserc
+├── .gitignore
+├── README.md
+├── eslint.config.js
+├── firebase.json
+├── index.html
+├── package-lock.json
+├── package.json
+├── public
+    └── vite.svg
+├── src
+    ├── App.css
+    ├── App.jsx
+    ├── Components
+    │   ├── AllGroup.jsx
+    │   ├── AllGroupDetails.jsx
+    │   ├── Banner.jsx
+    │   ├── Benifit.jsx
+    │   ├── Dashboard.jsx
+    │   ├── Faq.jsx
+    │   ├── Features.jsx
+    │   ├── Footer.jsx
+    │   ├── LoadingSpinner.jsx
+    │   ├── Navbar.jsx
+    │   └── Pending.jsx
+    ├── Layout
+    │   ├── AuthContext.jsx
+    │   ├── AuthLayout.jsx
+    │   ├── DashboardLayout.jsx
+    │   └── HomeLayouts.jsx
+    ├── animation
+    │   ├── Walking.jsx
+    │   ├── index.js
+    │   ├── loginAnimation.json
+    │   ├── loginAnimation2.json
+    │   └── loginAnimation3.json
+    ├── assets
+    │   └── react.svg
+    ├── firebase
+    │   └── FireBase.config.js
+    ├── index.css
+    ├── main.jsx
+    ├── pages
+    │   ├── Contact.jsx
+    │   ├── CreateAssignment.jsx
+    │   ├── DashNav.jsx
+    │   ├── ErrorPage.jsx
+    │   ├── ForgotPassword.jsx
+    │   ├── LiveStats.jsx
+    │   ├── Login.jsx
+    │   ├── MyAssignments.jsx
+    │   ├── Profile.jsx
+    │   ├── Register.jsx
+    │   ├── Sidebar.jsx
+    │   ├── Terms.jsx
+    │   ├── Testimonials.jsx
+    │   ├── TrendingAssignments.jsx
+    │   └── UpdateGroup.jsx
+    ├── provider
+    │   └── MyProvider.jsx
+    └── routes
+    │   ├── PrivateRoute.jsx
+    │   ├── ProtectedRoute.jsx
+    │   └── Router.jsx
+└── vite.config.js
+
 ```
 
 ---
