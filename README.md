@@ -24,9 +24,6 @@ Welcome to **FriendAssign**,, you will build a web application for online group 
 <p align="center">
   <i>Collaborate, Create, and Grade Assignments with Friends</i>
 </p>
-<p align="center">
-  <img src="https://i.postimg.cc/bvR5Q4QY/FriendAssign-Banner.jpg" width="100%" alt="FriendAssign Banner" />
-</p>
 
 ---
 ---
@@ -108,6 +105,17 @@ Here's a high-level overview of the project's file structure:
 ```
 
 ---
+
+<div align="center">
+  <img src="https://i.postimg.cc/hvfGtWj6/Screenshot-2025-10-26-132210.png" width="100%" alt="FriendAssign Banner" />
+  <br/><br/>
+  <img src="https://i.postimg.cc/MZN6mLHC/Screenshot-2025-10-26-132238.png" width="45%" alt="Home Page" />
+  <!-- <img src="https://i.postimg.cc/xyz/dashboard.jpg" width="45%" alt="Dashboard" />
+  <br/>
+  <img src="https://i.postimg.cc/xyz/assignment.jpg" width="45%" alt="Assignment Page" />
+  <img src="https://i.postimg.cc/xyz/profile.jpg" width="45%" alt="Profile Page" /> -->
+</div>
+
 
 ## 🧭 Routing Structure (with Layouts)
 
