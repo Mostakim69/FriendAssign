@@ -7,12 +7,8 @@ const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const sidebarRef = useRef(null);
 
-  // Toggle sidebar (mobile)
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleSidebar = () => setIsOpen(!isOpen);
 
-  // Close sidebar when clicking outside (mobile)
   useEffect(() => {
     function handleClickOutside(event) {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
@@ -20,9 +16,7 @@ const DashboardLayout = () => {
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -35,18 +29,18 @@ const DashboardLayout = () => {
       {/* Mobile Sidebar */}
       <div
         ref={sidebarRef}
-        className={`fixed top-0 left-0 z-50 h-screen w-64 transition-transform duration-300 transform
+        className={`fixed top-0 left-0 z-50 h-screen w-64 transform transition-transform duration-300
           ${isOpen ? "translate-x-0" : "-translate-x-64"} md:hidden`}
       >
-        <Sidebar />
+        <Sidebar closeSidebar={() => setIsOpen(false)} />
       </div>
 
-      {/* Overlay for mobile */}
+      {/* Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/30 z-40 md:hidden"
           onClick={() => setIsOpen(false)}
-        ></div>
+        />
       )}
 
       {/* Main Section */}
