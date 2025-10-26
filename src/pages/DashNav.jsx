@@ -6,26 +6,24 @@ const DashNav = ({ toggleSidebar }) => {
   const { user } = useContext(AuthContext) || {};
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white border-b border-gray-200 shadow-sm z-50 flex items-center justify-between px-4 sm:px-6 md:px-8 py-3 transition-all duration-300">
+    <section className="fixed w-full top-0 flex items-center gap-3 bg-white border-b px-4 py-3 z-50">
       {/* Left: Mobile Menu Button */}
-      <div className="md:hidden flex items-center">
-        <button
-          onClick={toggleSidebar}
-          className="p-2 rounded-md hover:bg-gray-100 transition"
-        >
-          <Menu className="w-6 h-6 text-gray-700" />
+      <div className="flex items-center md:hidden">
+        <button onClick={toggleSidebar}>
+          <Menu />
         </button>
       </div>
 
-      {/* Center: Welcome Text */}
-      <h1 className="hidden sm:block text-lg md:text-xl font-semibold text-gray-800">
-        Welcome to <span className="text-blue-600">Dashboard</span>
-      </h1>
+      <div className="flex justify-between items-center w-full md:pr-[260px]">
+        {/* Welcome text (hidden on mobile) */}
+        <h1 className="hidden sm:block text-lg md:text-xl font-semibold text-gray-800">
+          Welcome to Dashboard
+        </h1>
 
       {/* Right: Notifications & User */}
       <div className="flex items-center gap-4 ml-auto">
         {/* Notification */}
-        <button className="relative p-2 rounded-full hover:bg-gray-100 transition">
+        <button className="relative cursor-pointer hover:text-blue-700 transition-colors">
           <Bell className="w-6 h-6 text-gray-700" />
           <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
             2
@@ -47,7 +45,8 @@ const DashNav = ({ toggleSidebar }) => {
           />
         </div>
       </div>
-    </nav>
+      </div>
+    </section>
   );
 };
 
