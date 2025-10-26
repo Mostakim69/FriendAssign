@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import { AuthContext } from '../provider/MyProvider';
 
@@ -84,7 +83,7 @@ const Pending = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <Navbar />
+            
             <main className="flex-grow container mx-auto mt-8 xs:mt-10 sm:mt-12 px-2 xs:px-4 sm:px-6 py-6 xs:py-8 sm:py-12">
                 <h2 className="text-xl xs:text-2xl sm:text-3xl font-extrabold  text-center mb-4 xs:mb-6 sm:mb-8 tracking-tight">
                     Pending Assignments
