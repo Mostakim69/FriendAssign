@@ -107,13 +107,16 @@ Here's a high-level overview of the project's file structure:
 ---
 
 <div align="center">
-  <img src="https://i.postimg.cc/hvfGtWj6/Screenshot-2025-10-26-132210.png" width="100%" alt="FriendAssign Banner" />
+  <img src="https://i.postimg.cc/hvfGtWj6/Screenshot-2025-10-26-132210.png" width="100%" alt="Login Page" />
   <br/><br/>
-  <img src="https://i.postimg.cc/MZN6mLHC/Screenshot-2025-10-26-132238.png" width="45%" alt="Home Page" />
-  <!-- <img src="https://i.postimg.cc/xyz/dashboard.jpg" width="45%" alt="Dashboard" />
+  <img src="https://i.postimg.cc/MZN6mLHC/Screenshot-2025-10-26-132238.png" width="100%" alt="Register Page" />
+  <img src="https://i.postimg.cc/66fsy1Rc/Screenshot-2025-10-26-131125.png" width="100%" alt="FriendAssign Banner" />
   <br/>
-  <img src="https://i.postimg.cc/xyz/assignment.jpg" width="45%" alt="Assignment Page" />
-  <img src="https://i.postimg.cc/xyz/profile.jpg" width="45%" alt="Profile Page" /> -->
+  <img src="https://i.postimg.cc/3rB6K05z/Screenshot-2025-10-26-131203.png" width="100%" alt="Assignment Page" />
+  <img src="https://i.postimg.cc/L8djwvCG/Screenshot-2025-10-26-131511.png" width="100%" alt="All Assignment Details Page " />
+  <img src="https://i.postimg.cc/FHgkqvJH/Screenshot-2025-10-26-131633.png" width="100%" alt="Profile page" />
+  <img src="https://i.postimg.cc/kMBYWJ2j/Screenshot-2025-10-26-131659.png" width="100%" alt="Pendding Assignment Page" />
+  <img src="https://i.postimg.cc/FzLx8Kc1/Screenshot-2025-10-26-131806.png" width="100%" alt="My Assignment Page" />
 </div>
 
 
