@@ -24,6 +24,7 @@
     "lucide-react": "^0.546.0",
     "react": "^19.0.0",
     "react-awesome-reveal": "^4.3.1",
+    "react-countup": "^6.5.3",
     "react-datepicker": "^8.4.0",
     "react-dom": "^19.0.0",
     "react-fast-marquee": "^1.6.5",

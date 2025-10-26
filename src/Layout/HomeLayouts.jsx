@@ -10,6 +10,7 @@ import LoadingSpinner from '../Components/LoadingSpinner';
 import Contact from '../pages/Contact';
 import Testimonials from '../pages/Testimonials';
 import TrendingAssignments from '../pages/TrendingAssignments';
+import LiveStats from '../pages/LiveStats';
 
 const HomeLayouts = () => {
   const location = useLocation();
@@ -36,6 +37,9 @@ const HomeLayouts = () => {
             </div>
             <div id="faq-section">
               <Faq />
+            </div>
+            <div>
+              <LiveStats/>
             </div>
             <div id="contact-section">
               <Contact />
