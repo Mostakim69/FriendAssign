@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../provider/MyProvider';
 import { updateProfile } from 'firebase/auth';
 import Swal from 'sweetalert2';
-import Navbar from '../Components/Navbar';
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -26,7 +25,7 @@ const Profile = () => {
   };
 
   return (
-    <> <Navbar></Navbar>
+    <> 
     <div className="flex justify-center min-h-screen items-center">
       <div className="card bg-base-100 w-full max-w-md shadow-2xl p-8 rounded-lg">
         <h2 className="font-semibold text-3xl text-center mb-6">Your Profile</h2>

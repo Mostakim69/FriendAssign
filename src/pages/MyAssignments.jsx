@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../provider/MyProvider';
-import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 
 const MyAssignments = () => {
@@ -58,7 +57,6 @@ const MyAssignments = () => {
 
   return (
     <>
-      <Navbar />
       <main className="flex-grow pt-20 pb-20">
         <div className="container mx-auto p-4">
           <h2 className="text-3xl font-bold mb-6 text-center">My Assignments</h2>
