@@ -6,15 +6,15 @@ const DashNav = () => {
   const { user } = useContext(AuthContext) || {};
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white dark:bg-gray-900 shadow-lg border-b border-gray-200 dark:border-gray-800 z-50 flex justify-between items-center px-4 md:px-8 py-3 transition-all duration-300">
-      {/* Left Section */}
-      <h1 className="text-lg md:text-2xl font-semibold text-gray-800 dark:text-white select-none">
+    <nav className="fixed top-0 left-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm border-b border-gray-200 dark:border-gray-800 z-50 flex justify-between items-center px-4 sm:px-6 md:px-8 py-3 transition-all duration-300">
+      {/* Left */}
+      <h1 className="text-base sm:text-lg md:text-2xl font-semibold text-gray-800 dark:text-white select-none">
         Welcome <span className="text-blue-600">Dashboard</span>
       </h1>
 
-      {/* Right Section */}
-      <div className="flex items-center gap-4">
-        {/* Notification Button */}
+      {/* Right */}
+      <div className="flex items-center gap-3 sm:gap-5">
+        {/* Notification */}
         <button className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition">
           <Bell className="w-6 h-6 text-gray-600 dark:text-gray-300" />
           <span className="absolute top-1 right-1 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
@@ -24,7 +24,7 @@ const DashNav = () => {
 
         {/* User Info */}
         <div className="flex items-center gap-2 md:gap-3">
-          <span className="hidden sm:inline text-gray-700 dark:text-gray-200 font-medium">
+          <span className="hidden sm:inline text-gray-700 dark:text-gray-200 font-medium truncate max-w-[100px]">
             {user?.displayName || "User Name"}
           </span>
           <img

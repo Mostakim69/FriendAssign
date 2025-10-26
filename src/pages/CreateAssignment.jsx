@@ -114,7 +114,6 @@ const CreateAssignment = () => {
 
   return (
     <>
-      <Navbar />
       <main className="min-h-screen pt-16 mt-18 pb-12 dark:from-gray-900 dark:to-gray-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <form
