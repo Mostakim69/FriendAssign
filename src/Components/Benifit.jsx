@@ -1,6 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import {
+  FaUsers,
+  FaClipboardList,
+  FaGraduationCap,
+  FaCalendarAlt,
+  FaLock,
+  FaMobileAlt,
+} from "react-icons/fa";
 
 const textVariants = {
   hidden: { opacity: 0, x: 50 },
@@ -12,12 +20,30 @@ const Benifit = () => {
   const navigate = useNavigate();
 
   const items = [
-    "👥 Collaborative Group Study",
-    "📝 Create & Submit Assignments",
-    "🎓 Peer-to-Peer Grading",
-    "📅 Track Progress",
-    "🔒 Secure User Access",
-    "📱 Responsive Interface",
+    {
+      icon: <FaUsers className="inline mr-2 text-blue-500" />,
+      text: "Collaborative Group Study",
+    },
+    {
+      icon: <FaClipboardList className="inline mr-2 text-green-500" />,
+      text: "Create & Submit Assignments",
+    },
+    {
+      icon: <FaGraduationCap className="inline mr-2 text-purple-500" />,
+      text: "Peer-to-Peer Grading",
+    },
+    {
+      icon: <FaCalendarAlt className="inline mr-2 text-yellow-500" />,
+      text: "Track Progress",
+    },
+    {
+      icon: <FaLock className="inline mr-2 text-red-500" />,
+      text: "Secure User Access",
+    },
+    {
+      icon: <FaMobileAlt className="inline mr-2 text-indigo-500" />,
+      text: "Responsive Interface",
+    },
   ];
 
   const handleJoinUsClick = () => {
@@ -63,12 +89,12 @@ const Benifit = () => {
           {items.map((item, i) => (
             <motion.li
               key={i}
-              className="text-sm sm:text-base "
+              className="text-sm sm:text-base flex items-center"
               variants={textVariants}
               whileHover="hover"
               transition={{ delay: 0.4 + i * 0.1 }}
             >
-              {item}
+              {item.icon} {item.text}
             </motion.li>
           ))}
         </motion.ul>
