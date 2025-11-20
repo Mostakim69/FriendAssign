@@ -64,7 +64,7 @@ const FAQs = () => {
                 {faqs.map((faq, idx) => (
                     <div
                         key={idx}
-                        className="border border-primary bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-lg overflow-hidden shadow-lg hover:shadow-pink-500/30 transition-all duration-300"
+                        className="border border-primary bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-lg overflow-hidden shadow-lg hover:shadow-blue-400 transition-all duration-300"
                         data-aos="fade-down-left"
                         data-aos-delay={idx * 200} // Increased delay for visibility
                     >
@@ -72,13 +72,13 @@ const FAQs = () => {
                             onClick={() => toggle(idx)}
                             className="w-full flex justify-between items-center cursor-pointer px-6 py-4 text-left hover:bg-[#1f2937] transition-colors duration-300 group"
                         >
-                            <span className="text-lg md:text-xl font-semibold text-white group-hover:text-primary transition-colors">
+                            <span className="text-lg md:text-xl font-semibold text-white group-hover:text-blue-400 transition-colors">
                                 {faq.question}
                             </span>
                             <motion.span
                                 animate={{ rotate: openIndex === idx ? 180 : 0 }}
                                 transition={{ duration: 0.5 }} // Increased duration
-                                className="text-primary text-2xl"
+                                className="text-blue-400 text-2xl"
                             >
                                 ▾
                             </motion.span>
