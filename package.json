@@ -17,7 +17,7 @@
     "aos": "^2.3.4",
     "axios": "^1.10.0",
     "date-fns": "^4.1.0",
-    "firebase": "^11.6.1",
+    "firebase": "^11.10.0",
     "framer-motion": "^12.23.12",
     "jsonwebtoken": "^9.0.2",
     "lottie-react": "^2.4.1",

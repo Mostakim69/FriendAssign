@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import React, { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import { FaCheckCircle, FaArrowRight } from "react-icons/fa";
+
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const styles = `
   .animate-text {
@@ -27,9 +29,9 @@ const styles = `
 
 const Banner = () => {
   const backgroundImages = [
-    'https://i.postimg.cc/8z0M3rWh/2da25831d964b7709792167ff70125f6.jpg',
-    'https://i.postimg.cc/y6frBM1M/7.webp',
-    'https://i.postimg.cc/T39nc42H/b85aa0566b1aaf123c3b7b000c2e4cfc.jpg',
+    "https://i.postimg.cc/8z0M3rWh/2da25831d964b7709792167ff70125f6.jpg",
+    "https://i.postimg.cc/y6frBM1M/7.webp",
+    "https://i.postimg.cc/T39nc42H/b85aa0566b1aaf123c3b7b000c2e4cfc.jpg",
   ];
 
   const styleRef = useRef(false);
@@ -37,7 +39,7 @@ const Banner = () => {
 
   useEffect(() => {
     if (!styleRef.current) {
-      const styleSheet = document.createElement('style');
+      const styleSheet = document.createElement("style");
       styleSheet.textContent = styles;
       document.head.appendChild(styleSheet);
       styleRef.current = true;
@@ -45,7 +47,7 @@ const Banner = () => {
   }, []);
 
   const handleCreateClick = () => {
-    navigate('/assignments');
+    navigate("/assignments");
   };
 
   return (
@@ -57,7 +59,7 @@ const Banner = () => {
       pagination={{ clickable: true }}
       navigation
       className="w-full mt-18"
-      style={{ aspectRatio: '16 / 9', maxHeight: '75vh' }}
+      style={{ aspectRatio: "16 / 9", maxHeight: "75vh" }}
     >
       {backgroundImages.map((image, index) => (
         <SwiperSlide key={index}>
@@ -65,32 +67,42 @@ const Banner = () => {
             className="relative w-full h-full object-cover"
             style={{
               backgroundImage: `url(${image})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
             }}
           >
             <div className="hero-overlay bg-opacity-60"></div>
+
             <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 sm:px-6 md:px-12 lg:px-20 text-white">
               <h1 className="mb-5 font-extrabold animate-text text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
-                <span className="text-blue-400">Study Together.</span> Learn Better.
+                <span className="text-blue-400">Study Together.</span> Learn
+                Better.
               </h1>
+
               <p className="mb-4 font-semibold animate-text animate-text-delay-1 text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
-                Collaborate with friends, share assignments, and grow together in an engaging online study environment.
+                Collaborate with friends, share assignments, and grow together
+                in an engaging online study environment.
               </p>
+
               <div className="mb-2 max-w-md mx-auto sm:max-w-lg">
-                <p className="flex items-center space-x-2 mb-2 animate-text animate-text-delay-2 text-sm sm:text-base md:text-lg">
-                  <span>✅ Create & Join Study Groups</span>
+                <p className="flex items-center gap-2 mb-2 animate-text animate-text-delay-2 text-sm sm:text-base md:text-lg">
+                  <FaCheckCircle className="text-blue-400" />
+                  <span>Create & Join Study Groups</span>
                 </p>
-                <p className="flex items-center space-x-2 animate-text animate-text-delay-3 text-sm sm:text-base md:text-lg">
-                  <span>✅ Submit and Grade Assignments</span>
+
+                <p className="flex items-center gap-2 animate-text animate-text-delay-3 text-sm sm:text-base md:text-lg">
+                  <FaCheckCircle className="text-blue-400" />
+                  <span>Submit and Grade Assignments</span>
                 </p>
               </div>
+
               <button
                 onClick={handleCreateClick}
-                className="mt-4 animate-text btn btn-primary animate-text-delay-4 px-6 py-3 text-sm sm:text-base md:text-lg rounded text-white transition"
+                className="mt-4 animate-text btn btn-primary animate-text-delay-4 px-6 py-3 text-sm sm:text-base md:text-lg rounded text-white transition flex items-center gap-2"
               >
-                👉 View All Assignments
+                <FaArrowRight />
+                View All Assignments
               </button>
             </div>
 
@@ -102,7 +114,12 @@ const Banner = () => {
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </div>
           </div>
